@@ -1,0 +1,17 @@
+body {
+    padding-top: 40px;
+}
+
+.show-grid [class^=col-] {
+    padding-top:0px;
+    padding-bottom:10px;
+    margin-bottom:15px;
+    background-color:#eee;
+    background-color:rgba(86,61,124,.15);
+    border:1px solid #ddd;
+    border:1px solid rgba(86,61,124,.2)
+}
+
+h1 small {
+    padding-right: 20px;
+}
