@@ -29,8 +29,8 @@ pip install -r requirements.txt
 ```
 
 # Resources
-*[Flask](http://flask.pocoo.org/)
-*[Bootstrap](http://getbootstrap.com/)
-*[Flask Web Development Book](http://www.flaskbook.com/)
-*[Miguel Grinberg Flask Web Development Book](http://www.flaskbook.com/)
-*[Miguel Grinberg Flask Web Development GitHub](https://github.com/miguelgrinberg/flasky)
+* [Flask](http://flask.pocoo.org/)
+* [Bootstrap](http://getbootstrap.com/)
+* [Flask Web Development Book](http://www.flaskbook.com/)
+* [Miguel Grinberg Flask Web Development Book](http://www.flaskbook.com/)
+* [Miguel Grinberg Flask Web Development GitHub](https://github.com/miguelgrinberg/flasky)
