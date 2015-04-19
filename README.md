@@ -1,5 +1,5 @@
 # Overview
-This is a simple dashboarding web application built using Flask and Bootstrap.  The application requires Python 2.7.
+This is a simple dashboarding web application built using Flask, Bootstrap, and D3.  The application has been tested with Python 2.7.
 
 # Installation
 **Clone the repository**
@@ -29,8 +29,8 @@ pip install -r requirements.txt
 ```
 
 # Resources
-* [Flask](http://flask.pocoo.org/)
-* [Bootstrap](http://getbootstrap.com/)
-* [Flask Web Development Book](http://www.flaskbook.com/)
+* [Flask Documentation](http://flask.pocoo.org/)
+* [Bootstrap Documentation](http://getbootstrap.com/)
+* [D3 Documentation](http://d3js.org/)
 * [Miguel Grinberg Flask Web Development Book](http://www.flaskbook.com/)
 * [Miguel Grinberg Flask Web Development GitHub](https://github.com/miguelgrinberg/flasky)
