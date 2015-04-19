@@ -11,6 +11,7 @@ git clone https://github.com/salimhamed/dashboard.git
 ```
 cd dashboard
 virtualenv venv
+source venv/bin/activate
 ```
 
 **Install dependencies**
