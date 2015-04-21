@@ -1,5 +1,4 @@
-# from . import db
-import sqlalchemy as db
+from . import db
 
 
 class Role(db.Model):
@@ -88,6 +87,7 @@ class Period(db.Model):
 
 class Spend(db.Model):
     __tablename__ = 'spend'
+    id = db.Column(db.Integer, primary_key=True)
     period = db.Column(db.Date(), db.ForeignKey('periods.period'))
     promotion_id = db.Column(db.Integer(), db.ForeignKey('promotions.id'))
     product_id = db.Column(db.Integer(), db.ForeignKey('products.id'))
