@@ -8,9 +8,9 @@ from .forms import SearchForm
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    form = SearchForm()
-    if form.validate_on_submit():
-        session['company'] = form.company.data
+    search_form = SearchForm()
+    if search_form.validate_on_submit():
+        session['company'] = search_form.company.data
         return redirect(url_for('main.index'))
-    return render_template('index.html', form=form,
+    return render_template('index.html', form=search_form,
                            company=session.get('company'))

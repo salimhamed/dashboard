@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-# Create a Flask Blueprint with will define views and errors
+# Create a Flask Blueprint which will define views and errors
 main = Blueprint(
     'main',  # blueprint name
     __name__  # module where blueprint is located
