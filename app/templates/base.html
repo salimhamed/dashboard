@@ -210,12 +210,28 @@
     <div class="container-fluid">
 
         {% block content_flash %}
-            {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                {{ message }}
+
+            {% for message in get_flashed_messages(category_filter=["info"]) %}
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> {{ message }}
             </div>
             {% endfor %}
+
+            {% for message in get_flashed_messages(category_filter=["error"]) %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{ message }}
+            </div>
+            {% endfor %}
+
+            {% for message in get_flashed_messages(category_filter=["success"]) %}
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{ message }}
+            </div>
+            {% endfor %}
+
         {% endblock content_flash %}
 
         {% block wrapper %}
