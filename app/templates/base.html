@@ -1,7 +1,7 @@
 {% extends "bootstrap/base.html" %}
 
 
-{% block title %}AWS Dashboard{% endblock %}
+{% block title %}AWS Dashboard{% endblock title %}
 
 
 {% block head %}
@@ -11,14 +11,14 @@
     <link href="{{ url_for('static', filename='css/sb-admin.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/plugins/morris.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-{% endblock %}
+{% endblock head %}
 
 
 {% block body %}
 <div id="wrapper">
     {{ super() }}
 </div>
-{% endblock %}
+{% endblock body %}
 
 
 {% block navbar %}
@@ -188,7 +188,8 @@
     </div>
     <!-- /.navbar-collapse -->
 </nav>
-{% endblock %}
+{% endblock navbar %}
+
 
 {% block content %}
 <div id="page-wrapper">
@@ -203,10 +204,10 @@
         {% endfor %}
         <!-- End Flashed Messages -->
 
-        {% block wrapper %}{% endblock %}
+        {% block wrapper %}{% endblock wrapper %}
     </div>
 </div>
-{% endblock %}
+{% endblock content %}
 
 {% block scripts %}
 {{ super() }}
@@ -214,4 +215,4 @@
 <script src="{{ url_for('static', filename='js/plugins/morris/raphael.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/plugins/morris/morris.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/plugins/morris/morris-data.js') }}"></script>
-{% endblock %}
+{% endblock scripts %}
