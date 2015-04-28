@@ -1,7 +1,7 @@
 {% extends "bootstrap/base.html" %}
 
 
-{% block title %}AWS Dashboard{% endblock title %}
+{% block title %}Insights{% endblock title %}
 
 
 {% block head %}
@@ -15,9 +15,13 @@
 
 
 {% block body %}
+{% if current_user.is_authenticated() %}
 <div id="wrapper">
+{% endif %}
     {{ super() }}
+{% if current_user.is_authenticated() %}
 </div>
+{% endif %}
 {% endblock body %}
 
 
@@ -33,7 +37,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{{ url_for('main.index') }}">AWS Dashboard</a>
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">Insights</a>
     </div>
     {% endblock navbar_brand %}
 
@@ -41,6 +45,7 @@
     <ul class="nav navbar-right top-nav">
 
         {% block top_menu_items_messages %}
+        {% if current_user.is_authenticated() %}
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
             <ul class="dropdown-menu message-dropdown">
@@ -94,9 +99,11 @@
                 </li>
             </ul>
         </li>
+        {% endif %}
         {% endblock top_menu_items_messages %}
 
         {% block top_menu_items_alert %}
+        {% if current_user.is_authenticated() %}
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
             <ul class="dropdown-menu alert-dropdown">
@@ -124,6 +131,7 @@
                 </li>
             </ul>
         </li>
+        {% endif %}
         {% endblock top_menu_items_alert %}
 
         {% block top_menu_items_account %}
@@ -152,6 +160,7 @@
     {% endblock top_menu_items %}
 
     {% block sidebard_menu_items %}
+    {% if current_user.is_authenticated() %}
     <!-- These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
@@ -189,6 +198,7 @@
             </li>
         </ul>
     </div>
+    {% endif %}
     {% endblock sidebard_menu_items %}
 
 </nav>

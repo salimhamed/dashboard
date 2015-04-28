@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Dashboard - Welcome!{% endblock %}
+{% block title %}Insights - Welcome!{% endblock %}
 
 {% block wrapper %}
 <div class="page-header">
-    <h1>Welcome to the AWS Dashboard!</h1>
+    <h1>Welcome to Insights!</h1>
 </div>
 <div class="col-md-8">
-    <p>Welcome to the AWS Dashboard! This is an interactive dashboarding application that allows users to learn more about AWS.  However, you'll first need to <a href="{{ url_for('auth.login') }}">log in</a> before you can start using the AWS Dashboard.</p>
+    <p>Hello and welcome to Insights! This is an interactive dashboarding application that allows users to learn more about our customers.  However, you'll first need to <a href="{{ url_for('auth.login') }}">log in</a> before you can start using Insights.</p>
     <p>Are you a new user?  If so, you'll have to complete a quick <a href="{{ url_for('auth.register') }}">registration</a> process before logging in.</p>
 </div>
 {% endblock %}
