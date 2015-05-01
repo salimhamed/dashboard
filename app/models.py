@@ -17,13 +17,14 @@ class Permission:
     # TASK_TBD = int('00010000', 2)
     # TASK_TBD = int('00100000', 2)
     # TASK_TBD = int('01000000', 2)
-    ADMINISTER = int('10000000', 2)
+    ADMINISTER = int('10000000', 2)  # 0xff
 
 
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
+    # is this the default role
     default = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
     users = db.relationship('User', backref='role', lazy='dynamic')
@@ -65,6 +66,14 @@ class User(UserMixin, db.Model):
     customer_id = db.relationship('Customer', backref='user', lazy='dynamic')
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
+
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)
+        if self.role is None:
+            if self.email == current_app.config['DASHBOARD_ADMIN']:
+                self.role = Role.query.filter_by(permissions=0xff).first()
+            if self.role is None:
+                self.role = Role.query.filter_by(default=True).first()
 
     @property
     def password(self):
