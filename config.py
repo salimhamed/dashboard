@@ -12,7 +12,7 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_SUBJECT_PREFIX = '[Dashboard]'
     MAIL_SENDER = 'Dashboard Admin <dashboard@example.com>'
-    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+    FLASKY_ADMIN = os.environ.get('DASHBOARD_ADMIN')
 
     @staticmethod
     def init_app(app):
