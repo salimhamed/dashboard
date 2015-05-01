@@ -29,5 +29,25 @@ def test():
     unittest.TextTestRunner(verbosity=2).run(tests)
 
 
+@manager.command
+def db_rebuild():
+    """
+    Destroy and rebuild database.
+    """
+    # destroy and rebuild tables
+    db.drop_all()
+    db.create_all()
+
+    # insert roles as defined in model
+    Role.insert_roles()
+
+    # print results
+    inspector = db.inspect(db.engine)
+    print 'The following tables were created.'
+    print '-'*17
+    for table in inspector.get_table_names():
+        print table
+
+
 if __name__ == '__main__':
     manager.run()
