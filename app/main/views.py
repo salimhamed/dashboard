@@ -1,5 +1,5 @@
 from flask import render_template, session, redirect, url_for, current_app
-from flask.ext.login import current_user
+from flask_login import current_user
 from .. import db
 from ..models import User
 from ..email import send_email
