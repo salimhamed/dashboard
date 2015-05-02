@@ -8,6 +8,7 @@
     {{ super() }}
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/sb-admin.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/plugins/morris.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
@@ -139,6 +140,9 @@
             {% if current_user.is_authenticated() %}
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ current_user.username }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
+                <li>
+                    <a href="{{ url_for('main.user', username=current_user.username) }}"><i class="fa fa-fw fa-user"></i> Profile</a>
+                </li>
                 <li>
                     <a href="{{ url_for('auth.change_email_request') }}"><i class="fa fa-fw fa-gear"></i> Change Email</a>
                 </li>

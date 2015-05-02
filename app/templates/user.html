@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Insights - {{ user.username }}{% endblock %}
+
+{% block wrapper %}
+<div class="page-header">
+    <img class="img-rounded profile-thumbnail" src="{{ user.gravatar(size=256) }}">
+    <div class="profile-header">
+        <h1>{{ user.username }}</h1>
+
+        <!-- only create <p> element with name and location are set -->
+        {% if user.name or user.location %}
+        <p>
+            {% if user.name %}{{ user.name }}{% endif %}
+            {% if user.location %}
+                From <a href="http://maps.google.com/?q={{ user.location }}">{{ user.location }}</a>
+            {% endif %}
+        </p>
+        {% endif %}
+
+        <!-- only show email when user is an admin -->
+        {% if current_user.is_administrator() %}
+        <p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+        {% endif %}
+
+        {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+
+        <p>Member since {{ moment(user.member_since).format('L') }}. Last seen {{ moment(user.last_seen).fromNow() }}.</p>
+
+        <!-- only show edit button if user if viewing their own profile -->
+        {% if user == current_user %}
+        <p>
+            <a class="btn btn-default" href="{{ url_for('main.edit_profile') }}">Edit Profile</a>
+        </p>
+        {% endif %}
+
+        <!-- admins see edit buttons on all profiles -->
+        {% if current_user.is_administrator() %}
+        <p>
+            <a class="btn btn-danger" href="{{ url_for('main.edit_profile_admin', id=user.id) }}">Edit Profile [Admin]</a>
+        </p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock wrapper %}
