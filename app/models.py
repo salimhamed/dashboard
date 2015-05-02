@@ -8,7 +8,7 @@ from . import db, login_manager
 class Permission:
     """
     A specific permission task is given a bit position.  Eight tasks are
-    avalible.
+    avalible because there are eight bits in a byte.
     """
     FOLLOW = int('00000001', 2)
     COMMENT = int('00000010', 2)
@@ -24,20 +24,17 @@ class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    # is this the default role
     default = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
     users = db.relationship('User', backref='role', lazy='dynamic')
 
     @staticmethod
     def insert_roles():
-        """
-        Update or create Role permissions.
-        """
+        """Update or create all Roles."""
         roles = {
             'User': (Permission.FOLLOW |
                      Permission.COMMENT |
-                     Permission.WRITE_ARTICLES, True),
+                     Permission.WRITE_ARTICLES, True),  # User Role is default
             'Moderator': (Permission.FOLLOW |
                           Permission.COMMENT |
                           Permission.WRITE_ARTICLES |
@@ -151,6 +148,18 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, permissions):
+        return False
+
+    def is_administrator(self):
+        return False
+# Register AnonymousUser as the class assigned to 'current_user' when the user
+# is not logged in.  This will enable the app to call 'current_user.can()'
+# without having to first check if the user is logged in
+login_manager.anonymous_user = AnonymousUser
 
 
 @login_manager.user_loader

@@ -11,3 +11,14 @@ main = Blueprint(
 # imported after the Blueprint object is instantiated because they rely on the
 # Blueprint object to define routes and error handles
 from . import views, errors
+
+
+from ..models import Permission
+
+
+# To avoid having to add a tamplate argument in every 'render_template' call,
+# the Permission class is pass as a context processor.  This makes the
+# Permission class globally available to all templates.
+@main.app_context_processor
+def inject_permissions():
+    return dict(Permission=Permission)
