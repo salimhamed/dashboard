@@ -34,9 +34,9 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
 # Database Operations
 
 **Destroy and Rebuild Database**
-```
-./manage db_rebuild
-```
+  ```
+  ./manage db_rebuild
+  ```
 
 **Database Migrations**
 
