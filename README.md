@@ -5,11 +5,13 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
 # Installation
 
 1. Clone the repository
+
   ```
   git clone https://github.com/salimhamed/dashboard.git
   ```
 
 2. Create a virtualenv in the project directory
+
   ```
   cd dashboard
   virtualenv venv
@@ -17,16 +19,19 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
   ```
 
 3. Install dependencies
+
   ```
   pip install -r requirements.txt
   ```
 
 4. Run tests
+
   ```
   ./manage.py test
   ```
 
 5. Start development server
+
   ```
   ./manage.py runserver
   ```
@@ -34,6 +39,7 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
 # Database Operations
 
 **Destroy and Rebuild Database**
+
   ```
   ./manage db_rebuild
   ```
@@ -41,11 +47,13 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
 **Database Migrations**
 
 1. Create an automatic migration upgrade script
+
   ```
   ./manage db migrate -m "<migration message>"
   ```
 
 2. Apply the migration upgrade script (note, upgrade script should be reviewed before applying changes)
+
   ```
   ./manage db upgrade
   ```
