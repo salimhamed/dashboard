@@ -1,7 +1,9 @@
 # Overview
+
 This is a simple dashboarding web application built using Flask, Bootstrap, and D3.  The application has been tested with Python 2.7.
 
 # Installation
+
 1. Clone the repository
   ```
   git clone https://github.com/salimhamed/dashboard.git
@@ -30,12 +32,14 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
   ```
 
 # Database Operations
+
 **Destroy and Rebuild Database**
 ```
 ./manage db_rebuild
 ```
 
 **Database Migrations**
+
 1. Create an automatic migration upgrade script
   ```
   ./manage db migrate -m "<migration message>"
@@ -47,6 +51,7 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
   ```
 
 # Resources
+
 * [Flask Documentation](http://flask.pocoo.org/)
 * [Bootstrap Documentation](http://getbootstrap.com/)
 * [SB Admin Bootstrap Template](http://startbootstrap.com/template-overviews/sb-admin/)
