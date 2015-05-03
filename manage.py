@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 from app import create_app, db
-from app.models import User, Role
+from app.models import User, Role, Post
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
@@ -40,6 +40,10 @@ def db_rebuild():
 
     # insert roles as defined in model
     Role.insert_roles()
+
+    # insert fake data
+    User.generate_fake(200)
+    Post.generate_fake(400)
 
     # print results
     inspector = db.inspect(db.engine)
