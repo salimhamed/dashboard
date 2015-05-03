@@ -29,6 +29,16 @@ pip install -r requirements.txt
 ./manage.py runserver
 ```
 
+# Database Operations
+**Migrations**
+```
+# create automatic migration script (review upgrade script before applying)
+./manage db migrate -m "<migration message>"
+
+# apply migration upgrade script
+./manage db upgrade
+```
+
 # Resources
 * [Flask Documentation](http://flask.pocoo.org/)
 * [Bootstrap Documentation](http://getbootstrap.com/)
