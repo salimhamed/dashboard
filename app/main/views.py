@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, abort, flash
+from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm
@@ -15,9 +15,9 @@ def index():
         form = PostForm()
         if current_user.can(Permission.WRITE_ARTICLES) and \
                 form.validate_on_submit():
+            # 'current_user._get_current_object': get the actual user object
             post = Post(body=form.body.data,
                         author=current_user._get_current_object())
-                               # get the actual user object for author
             db.session.add(post)
             return redirect(url_for('main.index'))
         posts = Post.query.order_by(Post.timestamp.desc()).all()
@@ -27,7 +27,8 @@ def index():
 @main.route('/user/<username>')
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user.html', user=user)
+    posts = user.posts.order_by(Post.timestamp.desc()).all()
+    return render_template('user.html', user=user, posts=posts)
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])

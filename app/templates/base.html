@@ -25,7 +25,6 @@
 {% endif %}
 {% endblock body %}
 
-
 {% block navbar %}
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
@@ -214,7 +213,6 @@
     <div class="container-fluid">
 
         {% block content_flash %}
-
             {% for message in get_flashed_messages(category_filter=["info"]) %}
             <div class="alert alert-info alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -235,7 +233,6 @@
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{ message }}
             </div>
             {% endfor %}
-
         {% endblock content_flash %}
 
         {% block wrapper %}
