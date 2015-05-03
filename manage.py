@@ -41,8 +41,28 @@ def db_rebuild():
     # insert roles as defined in model
     Role.insert_roles()
 
+    # insert fake user data
+    from random import seed
+    import forgery_py
+    seed()
+
+    test_user = User(
+        email='test_user@test.com',
+        username='testuser',
+        password='password',
+        confirmed=True,
+        name='Joe Smith',
+        location='Seattle, WA',
+        about_me=forgery_py.lorem_ipsum.sentence(),
+        member_since=forgery_py.date.date(True)
+    )
+    db.session.add(test_user)
+    db.session.commit()
+
     # insert fake data
     User.generate_fake(200)
+
+    # insert fake post data
     Post.generate_fake(400)
 
     # print results

@@ -249,7 +249,7 @@ class Post(db.Model):
         user_count = User.query.count()
         for i in range(count):
             u = User.query.offset(randint(0, user_count - 1)).first()
-            p = Post(body=forgery_py.lorem_ipsum.sentences(randint(1, 5)),
+            p = Post(body=forgery_py.lorem_ipsum.paragraphs(randint(5, 15)),
                      timestamp=forgery_py.date.date(True),
                      author=u)
             db.session.add(p)

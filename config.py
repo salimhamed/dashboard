@@ -13,7 +13,7 @@ class Config(object):
     MAIL_SUBJECT_PREFIX = '[Dashboard]'
     MAIL_SENDER = 'Dashboard Admin <dashboard@example.com>'
     DASHBOARD_ADMIN = os.environ.get('DASHBOARD_ADMIN')
-    POSTS_PER_PAGE = 10
+    POSTS_PER_PAGE = 5
 
     @staticmethod
     def init_app(app):

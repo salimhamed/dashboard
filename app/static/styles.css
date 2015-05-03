@@ -39,6 +39,12 @@ div.post-content {
     margin-left: 48px;
     min-height: 48px;
 }
+div.post-footer {
+    text-align: right;
+}
+div.post-footer a {
+    text-decoration: none;
+}
 
 /* pagination */
 div.pagination {
