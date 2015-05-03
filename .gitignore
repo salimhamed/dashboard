@@ -1,8 +1,16 @@
+# virtualenv
 venv/
+
+# backup files from vim
 **/*.swp
+
+# python byte code files
 **/*.pyc
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# sqlite databases
+**/*.sqlite
