@@ -1,7 +1,9 @@
+/* add padding for fixed navbar */
 body {
-    padding-top: 40px;
+    margin-top: 50px;
 }
 
+/* profile page */
 .profile-thumbnail {
     position: absolute;
 }
@@ -10,3 +12,44 @@ body {
     margin-left: 280px;
 }
 
+/* blog posts */
+ul.posts {
+    list-style-type: none;
+    padding: 0px;
+    margin: 2px 0px 0px 0px;
+    border-top: 1px solid #e0e0e0;
+}
+ul.posts li.post {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+ul.posts li.post:hover {
+    background-color: #f0f0f0;
+}
+div.post-date {
+    float: right;
+}
+div.post-author {
+    font-weight: bold;
+}
+div.post-thumbnail {
+    position: absolute;
+}
+div.post-content {
+    margin-left: 48px;
+    min-height: 48px;
+}
+div.post-footer {
+    text-align: right;
+}
+div.post-footer a {
+    text-decoration: none;
+}
+
+/* pagination */
+div.pagination {
+    width: 100%;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+}
