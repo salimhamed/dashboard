@@ -39,3 +39,11 @@ div.post-content {
     margin-left: 48px;
     min-height: 48px;
 }
+
+/* pagination */
+div.pagination {
+    width: 100%;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+}

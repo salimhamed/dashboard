@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_macros.html" as macros %}
 
 {% block title %}Insights - {{ user.username }}{% endblock %}
 
@@ -44,7 +45,21 @@
 </div>
 
 <! -- blog posts -->
-{% include '_posts.html' %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recent Blog Posts by {{ user.username }}</h3>
+            </div>
+            {% include '_posts.html' %}
+            {% if pagination %}
+            <div class="pagination">
+                {{ macros.pagination_widget(pagination, 'main.index') }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 <! -- end blog posts -->
 
 {% endblock wrapper %}

@@ -1,27 +1,18 @@
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recent Blog Posts</h3>
+<div class="panel-body">
+    <ul class="posts">
+        {% for post in posts %}
+        <li class="post">
+            <div class="post-thumbnail">
+                <a href="{{ url_for('.user', username=post.author.username) }}">
+                    <img class="img-rounded profile-thumbnail" src="{{ post.author.gravatar(size=40) }}">
+                </a>
             </div>
-            <div class="panel-body">
-                <ul class="posts">
-                    {% for post in posts %}
-                    <li class="post">
-                        <div class="post-thumbnail">
-                            <a href="{{ url_for('.user', username=post.author.username) }}">
-                                <img class="img-rounded profile-thumbnail" src="{{ post.author.gravatar(size=40) }}">
-                            </a>
-                        </div>
-                        <div class="post-content">
-                            <div class="post-date">{{ moment(post.timestamp).fromNow() }}</div>
-                            <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
-                            <div class="post-body">{{ post.body }}</div>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
+            <div class="post-content">
+                <div class="post-date">{{ moment(post.timestamp).fromNow() }}</div>
+                <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
+                <div class="post-body">{{ post.body }}</div>
             </div>
-        </div>
-    </div>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
