@@ -28,6 +28,23 @@
 
         <p>Member since {{ moment(user.member_since).format('L') }}. Last seen {{ moment(user.last_seen).fromNow() }}.</p>
 
+        <p>{{ user.posts.count() }} blog posts.</p>
+
+        <p>
+            {% if current_user.can(Permission.FOLLOW) and user != current_user %}
+                {% if not current_user.is_following(user) %}
+                <a href="{{ url_for('main.follow', username=user.username) }}" class="btn btn-primary">Follow</a>
+                {% else %}
+                <a href="{{ url_for('main.unfollow', username=user.username) }}" class="btn btn-default">Unfollow</a>
+                {% endif %}
+            {% endif %}
+            <a href="{{ url_for('main.followers', username=user.username) }}">Followers: <span class="badge">{{ user.followers.count() }}</span></a>
+            <a href="{{ url_for('main.followed_by', username=user.username) }}">Following: <span class="badge">{{ user.followed.count() }}</span></a>
+            {% if current_user.is_authenticated() and user != current_user and user.is_following(current_user) %}
+            | <span class="label label-default">Follows you</span>
+            {% endif %}
+        </p>
+
         <!-- only show edit button if user if viewing their own profile -->
         {% if user == current_user %}
         <p>

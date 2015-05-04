@@ -32,7 +32,7 @@ def test():
 @manager.command
 def db_rebuild():
     """
-    Destroy and rebuild database.
+    Destroy and rebuild database with fake data.
     """
     # destroy and rebuild tables
     db.drop_all()

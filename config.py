@@ -14,6 +14,7 @@ class Config(object):
     MAIL_SENDER = 'Dashboard Admin <dashboard@example.com>'
     DASHBOARD_ADMIN = os.environ.get('DASHBOARD_ADMIN', 'admin@insights.com')
     POSTS_PER_PAGE = 5
+    FOLLOWERS_PER_PAGE = 10
 
     @staticmethod
     def init_app(app):
