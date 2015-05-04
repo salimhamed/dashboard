@@ -47,7 +47,7 @@ def db_rebuild():
     seed()
 
     test_user = User(
-        email='test_user@test.com',
+        email='test@insights.com',
         username='testuser',
         password='password',
         confirmed=True,
@@ -56,7 +56,17 @@ def db_rebuild():
         about_me=forgery_py.lorem_ipsum.sentence(),
         member_since=forgery_py.date.date(True)
     )
-    db.session.add(test_user)
+    admin_user = User(
+        email='admin@insights.com',
+        username='admin',
+        password='password',
+        confirmed=True,
+        name='Bill Gates',
+        location='Seattle, WA',
+        about_me=forgery_py.lorem_ipsum.sentence(),
+        member_since=forgery_py.date.date(True)
+    )
+    db.session.add_all([test_user, admin_user])
     db.session.commit()
 
     # insert fake data

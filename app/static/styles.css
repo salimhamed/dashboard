@@ -4,6 +4,11 @@ body {
 }
 
 /* profile page */
+.dropdown-menu {
+    min-width: 180px;
+}
+
+/* profile page */
 .profile-thumbnail {
     position: absolute;
 }
