@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 from app import create_app, db
-from app.models import User, Role, Post
+from app.models import User, Role, Post, Follow
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
@@ -14,7 +14,7 @@ def make_shell_context():
     """
     Automatically import app, db, and model objects into interactive shell.
     """
-    return dict(app=app, db=db, User=User, Role=Role)
+    return dict(app=app, db=db, User=User, Role=Role, Follow=Follow)
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
 
@@ -41,11 +41,10 @@ def db_rebuild():
     # insert roles as defined in model
     Role.insert_roles()
 
-    # insert fake user data
+    # insert fake admin/test users
     from random import seed
     import forgery_py
     seed()
-
     test_user = User(
         email='test@insights.com',
         username='testuser',
@@ -69,11 +68,14 @@ def db_rebuild():
     db.session.add_all([test_user, admin_user])
     db.session.commit()
 
-    # insert fake data
+    # insert fake user data
     User.generate_fake(200)
 
     # insert fake post data
     Post.generate_fake(400)
+
+    # insert fake followers
+    Follow.generate_fake(2000)
 
     # print results
     inspector = db.inspect(db.engine)

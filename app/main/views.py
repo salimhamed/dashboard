@@ -175,7 +175,7 @@ def followed_by(username):
         return redirect(url_for('.index'))
     page = request.args.get('page', 1, type=int)
     pagination = user.followed.paginate(
-        page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
+        page, per_page=current_app.config['FOLLOWERS_PER_PAGE'],
         error_out=False)
     follows = [{'user': item.followed, 'timestamp': item.timestamp}
                for item in pagination.items]

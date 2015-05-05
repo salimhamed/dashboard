@@ -64,6 +64,31 @@ class Follow(db.Model):
                             primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
+    @staticmethod
+    def generate_fake(count=100):
+        from sqlalchemy.exc import IntegrityError
+        from random import seed, randint
+
+        users = User.query.all()
+        # The method seed() sets the integer starting value used in generating
+        # random numbers. Call this function before calling any other random
+        # module function.
+        seed()
+        for i in range(count):
+            int_follower = randint(0, len(users) - 1)
+            int_followed = randint(0, len(users) - 1)
+            if int_follower != int_followed:
+                f = Follow(
+                    follower=users[int_follower],
+                    followed=users[int_followed]
+                )
+                db.session.add(f)
+                # relationship might not be random, in which case rollback
+                try:
+                    db.session.commit()
+                except IntegrityError:
+                    db.session.rollback()
+
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
