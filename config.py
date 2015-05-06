@@ -21,7 +21,22 @@ class Config(object):
         pass
 
 
-class DevelopmentConfig(Config):
+class DevelopmentConfigPsql(Config):
+    """
+    Steps to create a development psql database:
+
+    1) create cluster with 'initdb pgdb'
+    2) start psql server with 'postgres -D pgdb'
+    """
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = \
+        os.environ.get(
+            'DEV_DATABASE_URL',
+            'postgresql://localhost:5432/db_dev'
+        )
+
+
+class DevelopmentConfigSqlite(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = \
         os.environ.get(
@@ -48,8 +63,9 @@ class ProductionConfig(Config):
 
 
 config = {
-    'development': DevelopmentConfig,
+    'development_sqlite': DevelopmentConfigSqlite,
+    'development_psql': DevelopmentConfigPsql,
     'testing': TestingConfig,
     'production': ProductionConfig,
-    'default': DevelopmentConfig
+    'default': DevelopmentConfigPsql
 }
