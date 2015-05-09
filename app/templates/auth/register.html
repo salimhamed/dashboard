@@ -1,13 +1,28 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Dashboard - Register{% endblock %}
+{% block title %}Insights - Register{% endblock %}
+
+{% block navbar %}{% endblock %}
 
 {% block wrapper %}
-<div class="page-header">
-    <h1>Register</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
-</div>
+
+    <! -- page header -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Register
+            </h1>
+        </div>
+    </div>
+    <! -- end page header -->
+
+    <! -- register form -->
+    <div class="row">
+        <div class="col-lg-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+    <! -- end register form -->
+
 {% endblock %}

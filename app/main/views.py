@@ -11,7 +11,7 @@ from ..decorators import admin_required, permission_required
 @main.route('/', methods=['GET', 'POST'])
 def index():
     if current_user.is_anonymous():
-        return render_template('welcome.html')
+        return redirect(url_for('auth.login'))
     else:
         form = PostForm()
         if current_user.can(Permission.WRITE_ARTICLES) and \
