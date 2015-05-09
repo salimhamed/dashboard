@@ -24,13 +24,19 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
   pip install -r requirements.txt
   ```
 
-4. Run tests
+4. Create database
+
+  ```
+  ./manage db_rebuild
+  ```
+
+5. Run tests
 
   ```
   ./manage.py test
   ```
 
-5. Start development server
+6. Start development server
 
   ```
   ./manage.py runserver
@@ -39,6 +45,8 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
 # Database Operations
 
 **Destroy and Rebuild Database**
+
+1. The positional argument 'db_rebuild' will delete any existing sqlite database and create a new devlopment database populated with fake data.
 
   ```
   ./manage db_rebuild
