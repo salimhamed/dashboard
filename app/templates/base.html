@@ -433,6 +433,11 @@
 
 {% block scripts %}
 
+<!-- Set Global Variable of Site Root -->
+<script type=text/javascript>
+    $SCRIPT_ROOT = {{ request.host|tojson|safe }};
+</script>
+
 <!-- jQuery -->
 <script src="{{ url_for('static', filename='sb-admin-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
 
