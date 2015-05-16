@@ -96,7 +96,6 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    customer_id = db.relationship('Customer', backref='user', lazy='dynamic')
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
     name = db.Column(db.String(64))
@@ -119,7 +118,7 @@ class User(UserMixin, db.Model):
                                 backref=db.backref('followed', lazy='joined'),
                                 lazy='dynamic',  # return query, not items
                                 cascade='all, delete-orphan')
-    customers = db.relationship('Customer', backref='owner', lazy='dynamic')
+    firms = db.relationship('Firm', backref='owner', lazy='dynamic')
 
     @staticmethod
     def generate_fake(count=100):
@@ -319,63 +318,61 @@ class Post(db.Model):
             db.session.commit()
 
 
-class CustomerType(db.Model):
-    __tablename__ = 'customer_types'
+class FirmType(db.Model):
+    __tablename__ = 'firm_types'
     id = db.Column(db.Integer, primary_key=True)
-    customer_type = db.Column(db.String(64), unique=True)
-    customers = db.relationship('Customer', backref='type', lazy='dynamic')
+    firm_type = db.Column(db.String(64), unique=True)
+    firms = db.relationship('Firm', backref='type', lazy='dynamic')
 
     @staticmethod
-    def insert_customer_types():
-        """Update or create all Customer Types"""
+    def insert_firm_types():
+        """Update or create all Firm Types"""
         types = ['Venture Capital',
                  'Accelerator/Incubator',
                  'Startup Organization']
         for t in types:
-            cust_type = CustomerType.query.filter_by(customer_type=t).first()
-            if cust_type is None:
-                cust_type = CustomerType(customer_type=t)
-            db.session.add(cust_type)
+            firm_type = FirmType.query.filter_by(firm_type=t).first()
+            if firm_type is None:
+                firm_type = FirmType(firm_type=t)
+            db.session.add(firm_type)
         db.session.commit()
 
     def __repr__(self):
-        return '<CustomerType %r>' % self.customer_type
+        return '<FirmType %r>' % self.firm_type
 
 
-class CustomerTier(db.Model):
-    __tablename__ = 'customer_tiers'
+class FirmTier(db.Model):
+    __tablename__ = 'firm_tiers'
     id = db.Column(db.Integer, primary_key=True)
-    customer_tier = db.Column(db.String(64), unique=True)
-    customers = db.relationship('Customer', backref='tier', lazy='dynamic')
+    firm_tier = db.Column(db.String(64), unique=True)
+    firms = db.relationship('Firm', backref='tier', lazy='dynamic')
 
     @staticmethod
-    def insert_customer_tiers():
-        """Update or create all Customer Tiers"""
+    def insert_firm_tiers():
+        """Update or create all Firm Tiers"""
         tiers = ['Tier 1',
                  'Tier 2',
                  'Tier 3']
         for t in tiers:
-            cust_tier = CustomerTier.query.filter_by(customer_tier=t).first()
-            if cust_tier is None:
-                cust_tier = CustomerTier(customer_tier=t)
-            db.session.add(cust_tier)
+            firm_tier = FirmTier.query.filter_by(firm_tier=t).first()
+            if firm_tier is None:
+                firm_tier = FirmTier(firm_tier=t)
+            db.session.add(firm_tier)
         db.session.commit()
 
     def __repr__(self):
-        return '<CustomerTier %r>' % self.customer_tier
+        return '<FirmTier %r>' % self.firm_tier
 
 
-class Customer(db.Model):
-    __tablename__ = 'customers'
+class Firm(db.Model):
+    __tablename__ = 'firms'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(900), nullable=False, index=True)
     city = db.Column(db.String(100))
     state = db.Column(db.String(100))
     country = db.Column(db.String(100))
-    customer_type_id = db.Column(db.Integer,
-                                 db.ForeignKey('customer_types.id'))
-    customer_tier_id = db.Column(db.Integer,
-                                 db.ForeignKey('customer_tiers.id'))
+    firm_type_id = db.Column(db.Integer, db.ForeignKey('firm_types.id'))
+    firm_tier_id = db.Column(db.Integer, db.ForeignKey('firm_tiers.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     @staticmethod
@@ -386,23 +383,23 @@ class Customer(db.Model):
 
         seed()
         user_count = User.query.count()
-        type_count = CustomerType.query.count()
-        tier_count = CustomerTier.query.count()
+        type_count = FirmType.query.count()
+        tier_count = FirmTier.query.count()
         for i in range(count):
             # create fake relationships
-            tp = CustomerType.query.offset(randint(0, type_count - 1)).first()
-            tr = CustomerTier.query.offset(randint(0, tier_count - 1)).first()
+            tp = FirmType.query.offset(randint(0, type_count - 1)).first()
+            tr = FirmTier.query.offset(randint(0, tier_count - 1)).first()
             u = User.query.offset(randint(0, user_count - 1)).first()
 
-            # create fake customer
-            c = Customer(name=forgery_py.name.company_name(),
-                         city=forgery_py.address.city(),
-                         state=forgery_py.address.state_abbrev(),
-                         country=forgery_py.address.country(),
-                         type=tp,
-                         tier=tr,
-                         owner=u,)
-            db.session.add(c)
+            # create fake firm
+            f = Firm(name=forgery_py.name.company_name(),
+                     city=forgery_py.address.city(),
+                     state=forgery_py.address.state_abbrev(),
+                     country=forgery_py.address.country(),
+                     type=tp,
+                     tier=tr,
+                     owner=u,)
+            db.session.add(f)
             # custome might not be random, in which case rollback
             try:
                 db.session.commit()
@@ -410,66 +407,4 @@ class Customer(db.Model):
                 db.session.rollback()
 
     def __repr__(self):
-        return '<Customer {}>'.format(self.name)
-
-
-class Product(db.Model):
-    __tablename__ = 'products'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(900), unique=True, index=True)
-    category = db.Column(db.String(900), nullable=False)
-    sub_category = db.Column(db.String(900), nullable=False)
-
-    def __repr__(self):
-        return '<Product {}>'.format(self.name)
-
-
-class Promotion(db.Model):
-    __tablename__ = 'promotions'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(1000), nullable=False)
-    credit_name = db.Column(db.String(600), nullable=False)
-    credit_value = db.Column(db.Numeric(30, 6), nullable=False)
-    credit_remaining_value = db.Column(db.Numeric(30, 6), nullable=False)
-    redeemed_date = db.Column(db.Date())
-    expiration_date = db.Column(db.Date(), nullable=False)
-    customer_id = db.Column(db.Integer(), db.ForeignKey('customers.id'))
-
-    def __repr__(self):
-        return '<Promtion {}>'.format(self.name)
-
-
-def year_default(context):
-    """Context-sensitive default function for periods.year."""
-    dt = context.current_parameters['period']
-    return dt.year
-
-
-def qrt_default(context):
-    """Context-sensitive default function for periods.quarter."""
-    dt = context.current_parameters['period']
-    return 'Q{}-{}'.format((dt.month - 1)//3 + 1, dt.year)
-
-
-class Period(db.Model):
-    __tablename__ = 'periods'
-    period = db.Column(db.Date(), primary_key=True, index=True)
-    year = db.Column(db.Integer(), default=year_default, nullable=False)
-    quarter = db.Column(db.String(7), default=qrt_default, nullable=False)
-
-    def __repr__(self):
-        return '<Period {:%m-%d-%Y}>'.format(self.period)
-
-
-class Spend(db.Model):
-    __tablename__ = 'spend'
-    id = db.Column(db.Integer, primary_key=True)
-    period = db.Column(db.Date(), db.ForeignKey('periods.period'))
-    promotion_id = db.Column(db.Integer(), db.ForeignKey('promotions.id'))
-    product_id = db.Column(db.Integer(), db.ForeignKey('products.id'))
-    customer_id = db.Column(db.Integer(), db.ForeignKey('customers.id'))
-    spend = db.Column(db.Numeric(30, 6))
-
-    def __repr__(self):
-        repr_str = '<Spend for customer {} on {:%m-%d-%Y}>'
-        return repr_str.format(self.customer_id, self.period)
+        return '<Firm {}>'.format(self.name)

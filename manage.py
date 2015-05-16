@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import os
 from app import create_app, db
-from app.models import User, Role, Post, Follow, CustomerType, CustomerTier, \
-    Customer
+from app.models import User, Role, Post, Follow, FirmType, FirmTier, Firm
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
@@ -16,8 +15,7 @@ def make_shell_context():
     Automatically import app, db, and model objects into interactive shell.
     """
     return dict(app=app, db=db, User=User, Role=Role, Follow=Follow,
-                CustomerType=CustomerType, CustomerTier=CustomerTier,
-                Customer=Customer)
+                FirmType=FirmType, FirmTier=FirmTier, Firm=Firm)
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
 
@@ -38,6 +36,7 @@ def db_rebuild():
     Destroy and rebuild database with fake data.
     """
     # destroy and rebuild tables
+    db.reflect()
     db.drop_all()
     db.create_all()
 
@@ -45,8 +44,8 @@ def db_rebuild():
     Role.insert_roles()
 
     # insert customer types/iters as defined in model
-    CustomerType.insert_customer_types()
-    CustomerTier.insert_customer_tiers()
+    FirmType.insert_firm_types()
+    FirmTier.insert_firm_tiers()
 
     # insert fake admin/test users
     from random import seed
@@ -85,7 +84,7 @@ def db_rebuild():
     Follow.generate_fake(2000)
 
     # insert fake customers
-    Customer.generate_fake(3000)
+    Firm.generate_fake(3000)
 
     # print results
     inspector = db.inspect(db.engine)
