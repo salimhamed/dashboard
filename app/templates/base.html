@@ -12,31 +12,29 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
 
-    <!-- Custom CSS -->
-    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
-
     <!-- Bootstrap Core CSS -->
     <link href="{{ url_for('static', filename='sb-admin-2/bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!--<link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
 
     <!-- MetisMenu CSS -->
     <link href="{{ url_for('static', filename='sb-admin-2/bower_components/metisMenu/dist/metisMenu.min.css') }}" rel="stylesheet">
-    <!--<link href="/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">-->
 
-    <!-- Timeline CSS -->
-    <link href="{{ url_for('static', filename='sb-admin-2/dist/css/timeline.css') }}" rel="stylesheet">
-    <!--<link href="/dist/css/timeline.css" rel="stylesheet">-->
+    <!-- DataTables CSS -->
+    <link href="{{ url_for('static', filename='sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="{{ url_for('static', filename='sb-admin-2/bower_components/datatables-responsive/css/dataTables.responsive.css') }}" rel="stylesheet">
 
     <!-- SB-Admin-2 Custom CSS -->
     <link href="{{ url_for('static', filename='sb-admin-2/dist/css/sb-admin-2.css') }}" rel="stylesheet">
-    <!--<link href="/dist/css/sb-admin-2.css" rel="stylesheet">-->
 
     <!-- Morris Charts CSS -->
     <link href="{{ url_for('static', filename='sb-admin-2/bower_components/morrisjs/morris.css') }}" rel="stylesheet">
-    <!--<link href="/bower_components/morrisjs/morris.css" rel="stylesheet">-->
 
     <!-- Custom Fonts -->
     <link href="{{ url_for('static', filename='sb-admin-2/bower_components/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
 {% endblock styles %}
 
 
@@ -447,6 +445,10 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="{{ url_for('static', filename='sb-admin-2/bower_components/metisMenu/dist/metisMenu.min.js') }}"></script>
 
+<!-- DataTables JavaScript -->
+<script src="{{ url_for('static', filename='sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js') }}"></script>
+
 <!-- Custom Theme JavaScript -->
 <script src="{{ url_for('static', filename='sb-admin-2/dist/js/sb-admin-2.js') }}"></script>
 
@@ -454,7 +456,15 @@
 <script src="{{ url_for('static', filename='typeahead/typeahead.bundle.js') }}"></script>
 <script src="{{ url_for('static', filename='js/autocomplete.js') }}"></script>
 
+<!-- Morris Chart Data -->
+<script src="{{ url_for('static', filename='sb-admin-2/bower_components/raphael/raphael-min.js') }}"></script>
+<script src="{{ url_for('static', filename='sb-admin-2/bower_components/morrisjs/morris.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/morris-data.js') }}"></script>
+
 <!-- Moment -->
 {{ moment.include_moment() }}
+
+<!-- Initalize DataTables -->
+<script src="{{ url_for('static', filename='js/datatables.js') }}"></script>
 
 {% endblock scripts %}
