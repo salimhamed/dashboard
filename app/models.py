@@ -119,6 +119,7 @@ class User(UserMixin, db.Model):
                                 lazy='dynamic',  # return query, not items
                                 cascade='all, delete-orphan')
     firms = db.relationship('Firm', backref='owner', lazy='dynamic')
+    companies = db.relationship('Company', backref='owner', lazy='dynamic')
 
     @staticmethod
     def generate_fake(count=100):
@@ -318,6 +319,34 @@ class Post(db.Model):
             db.session.commit()
 
 
+class Relationship(db.Model):
+    __tablename__ = 'relationships'
+    firm_id = db.Column(db.Integer, db.ForeignKey('firms.id'),
+                        primary_key=True)
+    company_id = db.Column(db.Integer, db.ForeignKey('companies.id'),
+                           primary_key=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @staticmethod
+    def generate_fake(count=100):
+        from sqlalchemy.exc import IntegrityError
+        from random import seed, randint
+
+        firm_offset = Firm.query.count() - 1
+        company_offset = Company.query.count() - 1
+        seed()
+        for i in range(count):
+            f = Firm.query.offset(randint(0, firm_offset)).first()
+            c = Company.query.offset(randint(0, company_offset)).first()
+            rel = Relationship(firms=f, companies=c)
+            db.session.add(rel)
+            # relationship might already exist, then rollback
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+
+
 class FirmType(db.Model):
     __tablename__ = 'firm_types'
     id = db.Column(db.Integer, primary_key=True)
@@ -374,6 +403,11 @@ class Firm(db.Model):
     firm_type_id = db.Column(db.Integer, db.ForeignKey('firm_types.id'))
     firm_tier_id = db.Column(db.Integer, db.ForeignKey('firm_tiers.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    companies = db.relationship('Relationship',
+                                foreign_keys=[Relationship.firm_id],
+                                backref=db.backref('firms', lazy='joined'),
+                                lazy='dynamic',  # return query, not items
+                                cascade='all, delete-orphan')
 
     @staticmethod
     def generate_fake(count=100):
@@ -408,3 +442,46 @@ class Firm(db.Model):
 
     def __repr__(self):
         return '<Firm {}>'.format(self.name)
+
+
+class Company(db.Model):
+    __tablename__ = 'companies'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(900), nullable=False, index=True)
+    city = db.Column(db.String(100))
+    state = db.Column(db.String(100))
+    country = db.Column(db.String(100))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    firms = db.relationship('Relationship',
+                            foreign_keys=[Relationship.company_id],
+                            backref=db.backref('companies', lazy='joined'),
+                            lazy='dynamic',   # return query, not items
+                            cascade='all, delete-orphan')
+
+    @staticmethod
+    def generate_fake(count=100):
+        from sqlalchemy.exc import IntegrityError
+        from random import seed, randint
+        import forgery_py
+
+        seed()
+        user_offset = User.query.count() - 1
+        for i in range(count):
+            # create fake relationships
+            u = User.query.offset(randint(0, user_offset)).first()
+
+            # create fake company
+            c = Company(name=forgery_py.name.company_name(),
+                        city=forgery_py.address.city(),
+                        state=forgery_py.address.state_abbrev(),
+                        country=forgery_py.address.country(),
+                        owner=u)
+            db.session.add(c)
+            # company might not be random, in which case rollback
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+
+    def __repr__(self):
+        return '<Company {}>'.format(self.name)

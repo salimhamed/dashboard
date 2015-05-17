@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import os
 from app import create_app, db
-from app.models import User, Role, Post, Follow, FirmType, FirmTier, Firm
+from app.models import User, Role, Post, Follow, FirmType, FirmTier, Firm, \
+    Company, Relationship
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
@@ -15,7 +16,8 @@ def make_shell_context():
     Automatically import app, db, and model objects into interactive shell.
     """
     return dict(app=app, db=db, User=User, Role=Role, Follow=Follow,
-                FirmType=FirmType, FirmTier=FirmTier, Firm=Firm)
+                FirmType=FirmType, FirmTier=FirmTier, Firm=Firm,
+                Company=Company, Relationship=Relationship)
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
 
@@ -43,7 +45,7 @@ def db_rebuild():
     # insert roles as defined in model
     Role.insert_roles()
 
-    # insert customer types/iters as defined in model
+    # insert firm types/tiers as defined in model
     FirmType.insert_firm_types()
     FirmTier.insert_firm_tiers()
 
@@ -83,8 +85,14 @@ def db_rebuild():
     # insert fake followers
     Follow.generate_fake(2000)
 
-    # insert fake customers
-    Firm.generate_fake(3000)
+    # insert fake firms
+    Firm.generate_fake(2000)
+
+    # insert fake companies
+    Company.generate_fake(5000)
+
+    # insert fake relationships
+    Relationship.generate_fake(30000)
 
     # print results
     inspector = db.inspect(db.engine)
