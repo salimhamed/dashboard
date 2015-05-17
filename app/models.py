@@ -350,19 +350,20 @@ class Relationship(db.Model):
 class FirmType(db.Model):
     __tablename__ = 'firm_types'
     id = db.Column(db.Integer, primary_key=True)
+    firm_type_code = db.Column(db.String(2), unique=True)
     firm_type = db.Column(db.String(64), unique=True)
     firms = db.relationship('Firm', backref='type', lazy='dynamic')
 
     @staticmethod
     def insert_firm_types():
         """Update or create all Firm Types"""
-        types = ['Venture Capital',
-                 'Accelerator/Incubator',
-                 'Startup Organization']
+        types = [['vc', 'Venture Capital Firm'],
+                 ['ai', 'Accelerator and Incubator'],
+                 ['su', 'Startup Organization']]
         for t in types:
-            firm_type = FirmType.query.filter_by(firm_type=t).first()
+            firm_type = FirmType.query.filter_by(firm_type_code=t[0]).first()
             if firm_type is None:
-                firm_type = FirmType(firm_type=t)
+                firm_type = FirmType(firm_type_code=t[0], firm_type=t[1])
             db.session.add(firm_type)
         db.session.commit()
 
@@ -453,10 +454,10 @@ class Company(db.Model):
     country = db.Column(db.String(100))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     firms = db.relationship('Relationship',
-                            foreign_keys=[Relationship.company_id],
-                            backref=db.backref('companies', lazy='joined'),
-                            lazy='dynamic',   # return query, not items
-                            cascade='all, delete-orphan')
+            foreign_keys=[Relationship.company_id],
+            backref=db.backref('companies', lazy='joined'),
+            lazy='dynamic',   # return query, not items
+            cascade='all, delete-orphan')
 
     @staticmethod
     def generate_fake(count=100):
@@ -472,10 +473,10 @@ class Company(db.Model):
 
             # create fake company
             c = Company(name=forgery_py.name.company_name(),
-                        city=forgery_py.address.city(),
-                        state=forgery_py.address.state_abbrev(),
-                        country=forgery_py.address.country(),
-                        owner=u)
+                    city=forgery_py.address.city(),
+                    state=forgery_py.address.state_abbrev(),
+                    country=forgery_py.address.country(),
+                    owner=u)
             db.session.add(c)
             # company might not be random, in which case rollback
             try:

@@ -1,10 +1,11 @@
 from flask import render_template, redirect, url_for, flash, request, abort, \
-    current_app, Response, json, jsonify
+    current_app, jsonify
 from flask_login import current_user, login_required
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm
 from .. import db
-from ..models import Permission, Role, User, Post, Firm, Company
+from ..models import Permission, Role, User, Post, Firm, Company, FirmTier, \
+    FirmType
 from ..decorators import admin_required, permission_required
 
 
@@ -190,6 +191,58 @@ def company(id):
     # user = User.query.filter_by(username=username).first_or_404()
     # posts = user.posts.order_by(Post.timestamp.desc()).all()
     return render_template('startup.html')
+
+
+@main.route('/firm/<int:id>')
+@login_required
+def firm(id):
+    # user = User.query.filter_by(username=username).first_or_404()
+    # posts = user.posts.order_by(Post.timestamp.desc()).all()
+    return render_template('firm.html')
+
+
+@main.route('/firms/<username>')
+@login_required
+def firms(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid user.', 'error')
+        return redirect(url_for('main.index'))
+
+    # get request arguments
+    firm_type_code = request.args.get('firm_type_code', 'vc', type=str)
+    page = request.args.get('page', 1, type=int)
+
+    # format firm type
+    firm_type = FirmType.query.filter_by(firm_type_code=firm_type_code).first()
+    firm_type = firm_type.firm_type
+    from inflect import engine
+    p = engine()
+    firm_type_p = p.plural(firm_type)
+
+    # pagenation query for firms
+    query = Firm.query\
+                .join(FirmType, FirmType.id == Firm.firm_type_id)\
+                .join(FirmTier, FirmTier.id == Firm.firm_tier_id)\
+                .filter(Firm.user_id == user.id,
+                        FirmType.firm_type == firm_type)\
+                .order_by(FirmTier.firm_tier.asc(),
+                          Firm.name.asc())
+    pagination = query.paginate(
+        page, per_page=current_app.config['FOLLOWERS_PER_PAGE'],
+        error_out=False)
+    firms = [{'name': item.name,
+              'type': item.type.firm_type,
+              'tier': item.tier.firm_tier,
+              'owner': item.owner,
+              'city': item.city,
+              'state': item.state,
+              'country': item.country}
+             for item in pagination.items]
+    return render_template('firm_list.html', user=user,
+                           title=firm_type_p,
+                           endpoint='main.firms', pagination=pagination,
+                           firms=firms)
 
 
 @main.route('/_search')

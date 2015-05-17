@@ -1,191 +1,71 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% import "_macros.html" as macros %}
 
 {% block wrapper %}
 
-    <!-- relationship summary header -->
+    <!-- startup name header -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">
-                Relationships <small> Owned by {{ current_user.username }}</small>
-            </h1>
+            <h1 class="page-header"><i class="fa fa-lightbulb-o fa-lg"></i> Sequoia Capital</h1>
         </div>
     </div>
-    <!-- end relationship summary header -->
+    <!-- end startup name header -->
 
-    <!-- relationship summary componets -->
+
     <div class="row">
 
-        <!-- details column -->
-        <div class="col-lg-4">
-
-            <!-- vc firm details -->
-            <div class="panel panel-blue">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-university fa-4x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="panel-data">26</div>
-                            <div>Venture Capital Firms</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-            <!-- end vc firm details -->
-
-            <!-- ai firm details -->
-            <div class="panel panel-grey">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-rocket fa-4x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="panel-data">26</div>
-                            <div>Accelerators and Incubators</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-            <!-- end ai firm details -->
-
-            <!-- startup org firm details -->
-            <div class="panel panel-green">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-building-o fa-4x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="panel-data">26</div>
-                            <div>Startup Organizations</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-            <!-- end startup org firm details -->
-
-        </div>
-        <!-- end details column -->
-
-        <!-- firm summary bar chart -->
+        <!-- billing history -->
         <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bar-chart-o fa-fw"></i> Relationship Summary by Tier
+                    <i class="fa fa-line-chart fa-fw"></i> Historical 12-Month Spend
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Actions
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="#"><i class="fa fa-file-excel-o fa-fw"></i> Export to Excel</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+                <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div class="morris-charts" id="firm-bar-chart"></div>
+                    <div id="spend-by-month-chart"></div>
                 </div>
+                <!-- /.panel-body -->
             </div>
+            <!-- /.panel -->
         </div>
-        <!-- end firm summary bar chart -->
+        <!-- end billing history -->
 
-    </div>
-    <!-- end relationship summary componets -->
-
-
-
-
-    <!-- penetration summary header -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                Penetration Summary <small>Penetration for {{ current_user.username }}</small>
-            </h1>
-        </div>
-    </div>
-    <!-- end penetration summary header -->
-
-    <!-- penetration summary componets -->
-    <div class="row">
-
-        <!-- vc penetration donut chart -->
+        <!--  optimiztion donut chart -->
         <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-university fa-fw"></i> M+ Venture Captial Penetration
+                    <i class="fa fa-money fa-fw"></i> Optimization Percentage
                 </div>
                 <div class="panel-body">
-                    <div class="morris-charts" id="vc-penetration-donut"></div>
+                    <div id="optmization-donut-chart"></div>
                 </div>
             </div>
         </div>
-        <!-- end vc penetration donut chart -->
-
-        <!-- ai penetration donut chart -->
-        <div class="col-lg-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-rocket fa-fw"></i> 12-Month A&amp;I Penetration
-                </div>
-                <div class="panel-body">
-                    <div class="morris-charts" id="ai-penetration-donut"></div>
-                </div>
-            </div>
-        </div>
-        <!-- end ai penetration donut chart -->
-
-        <!-- overall penetration donut chart -->
-        <div class="col-lg-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-pie-chart fa-fw"></i> Overall Penetration
-                </div>
-                <div class="panel-body">
-                    <div class="morris-charts" id="overall-penetration-donut"></div>
-                </div>
-            </div>
-        </div>
-        <!-- end overall penetration donut chart -->
+        <!-- end optimization donut chart -->
 
     </div>
-    <!-- end relationship summary componets -->
+    <!-- ./row -->
 
 
-
-
-
-    <!-- top firms header -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                Top Relationships By Charges <small> Owned by {{ current_user.username }}</small>
-            </h1>
-        </div>
-    </div>
-    <!-- end top firms header -->
-
-    <!-- top vc firms table -->
+    <!-- vc firms table -->
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-university fa-fw"></i> Top Venture Capital Firms
+                    <i class="fa fa-university fa-fw"></i> Venture Capital Firm Relationships
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -263,7 +143,6 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    <a class="btn btn-default btn-lg btn-block" href="{{ url_for('main.firms', username=current_user.username, firm_type_code = 'vc') }}" role="button">View All Venture Captial Firms</a>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -271,14 +150,14 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    <!-- end top vc firms table -->
+    <!-- end vc firms table -->
 
-    <!-- top ai firms table -->
+    <!-- ai firms table -->
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-rocket fa-fw"></i> Top Accelerator and Incubators
+                    <i class="fa fa-rocket fa-fw"></i> Accelerator and Incubator Relationships
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -356,7 +235,6 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    <a class="btn btn-default btn-lg btn-block" href="{{ url_for('main.firms', username=current_user.username, firm_type_code='ai') }}" role="button">View All Accelerator and Incubators</a>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -366,12 +244,12 @@
     </div>
     <!-- end top ai firms table -->
 
-    <!-- top startup orgs table -->
+    <!-- accounts table -->
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-building-o fa-fw"></i> Top Startup Organizations
+                    <i class="fa fa-key fa-fw"></i> Accounts
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -449,7 +327,6 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    <a class="btn btn-default btn-lg btn-block" href="{{ url_for('main.firms', username=current_user.username, firm_type_code='su') }}" role="button">View All Startup Organizations</a>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -457,54 +334,7 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    <!-- end top startup orgs table -->
-
-
-
-    <!-- blog posts summary header -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                Blog Posts
-            </h1>
-        </div>
-    </div>
-    <!-- end blog posts summary header -->
-
-    <! -- submit posts -->
-    {% if current_user.can(Permission.WRITE_ARTICLES) %}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-pencil-square-o fa-fw"></i> Submit a Blog Post</h3>
-                </div>
-                <div class="panel-body">
-                    {{ wtf.quick_form(form) }}
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-    <! -- end submit posts -->
-
-    <! -- blog posts -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recent Blog Posts</h3>
-                </div>
-                {% include '_posts.html' %}
-                {% if pagination %}
-                <div class="pagination">
-                    {{ macros.pagination_widget(pagination, 'main.index') }}
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <! -- end blog posts -->
+    <!-- end account id table -->
 
 {% endblock %}
 
@@ -515,6 +345,6 @@
 <!-- Morris Chart Data -->
 <script src="{{ url_for('static', filename='sb-admin-2/bower_components/raphael/raphael-min.js') }}"></script>
 <script src="{{ url_for('static', filename='sb-admin-2/bower_components/morrisjs/morris.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/morris-data-index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/morris-data-startup.js') }}"></script>
 
 {% endblock scripts %}
