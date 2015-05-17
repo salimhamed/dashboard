@@ -445,10 +445,6 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="{{ url_for('static', filename='sb-admin-2/bower_components/metisMenu/dist/metisMenu.min.js') }}"></script>
 
-<!-- DataTables JavaScript -->
-<script src="{{ url_for('static', filename='sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ url_for('static', filename='sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js') }}"></script>
-
 <!-- Custom Theme JavaScript -->
 <script src="{{ url_for('static', filename='sb-admin-2/dist/js/sb-admin-2.js') }}"></script>
 
@@ -463,8 +459,5 @@
 
 <!-- Moment -->
 {{ moment.include_moment() }}
-
-<!-- Initalize DataTables -->
-<script src="{{ url_for('static', filename='js/datatables.js') }}"></script>
 
 {% endblock scripts %}
