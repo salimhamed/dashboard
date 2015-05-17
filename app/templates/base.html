@@ -168,19 +168,19 @@
                     <a href="{{ url_for('main.index') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-users fa-fw"></i> Relationships<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cubes fa-fw"></i> Relationships<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">Startup Companies</a>
+                            <a href="#"><i class="fa fa-lightbulb-o fa-fw"></i> Startup Companies</a>
                         </li>
                         <li>
-                            <a href="#">Venture Capital Firms</a>
+                            <a href="#"><i class="fa fa-university fa-fw"></i> Venture Capital Firms</a>
                         </li>
                         <li>
-                            <a href="#">Acclerators and Incubators</a>
+                            <a href="#"><i class="fa fa-rocket fa-fw"></i> Acclerators and Incubators</a>
                         </li>
                         <li>
-                            <a href="#">Startup Organizations</a>
+                            <a href="#"><i class="fa fa-building-o fa-fw"></i> Startup Organizations</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
@@ -189,19 +189,22 @@
                     <a href="#"><i class="fa fa-files-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">Report 1</a>
+                            <a href="#"><i class="fa fa-file-o fa-fw"></i> Report 1</a>
                         </li>
                         <li>
-                            <a href="#">Report 2</a>
+                            <a href="#"><i class="fa fa-file-o fa-fw"></i> Report 2</a>
                         </li>
                         <li>
-                            <a href="#">Report 3</a>
+                            <a href="#"><i class="fa fa-file-o fa-fw"></i> Report 3</a>
                         </li>
                         <li>
-                            <a href="#">Report 4</a>
+                            <a href="#"><i class="fa fa-file-o fa-fw"></i> Report 4</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-users fa-fw"></i> Users</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-bullseye fa-fw"></i> Goals</a>
@@ -273,11 +276,6 @@
 <!-- Autocomplete -->
 <script src="{{ url_for('static', filename='typeahead/typeahead.bundle.js') }}"></script>
 <script src="{{ url_for('static', filename='js/autocomplete.js') }}"></script>
-
-<!-- Morris Chart Data -->
-<script src="{{ url_for('static', filename='sb-admin-2/bower_components/raphael/raphael-min.js') }}"></script>
-<script src="{{ url_for('static', filename='sb-admin-2/bower_components/morrisjs/morris.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/morris-data.js') }}"></script>
 
 <!-- Moment -->
 {{ moment.include_moment() }}

@@ -71,7 +71,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-lightbulb-o fa-4x"></i>
+                            <i class="fa fa-building-o fa-4x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="panel-data">26</div>
@@ -415,3 +415,14 @@
     <! -- end blog posts -->
 
 {% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+
+<!-- Morris Chart Data -->
+<script src="{{ url_for('static', filename='sb-admin-2/bower_components/raphael/raphael-min.js') }}"></script>
+<script src="{{ url_for('static', filename='sb-admin-2/bower_components/morrisjs/morris.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/morris-data-index.js') }}"></script>
+
+{% endblock scripts %}
