@@ -184,6 +184,14 @@ def followed_by(username):
                            follows=follows)
 
 
+@main.route('/company/<int:id>')
+@login_required
+def company(id):
+    # user = User.query.filter_by(username=username).first_or_404()
+    # posts = user.posts.order_by(Post.timestamp.desc()).all()
+    return render_template('startup.html')
+
+
 @main.route('/_search')
 @login_required
 def search():
