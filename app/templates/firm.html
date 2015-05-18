@@ -6,7 +6,16 @@
     <!-- startup name header -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><i class="fa fa-lightbulb-o fa-lg"></i> Sequoia Capital</h1>
+            <h1 class="page-header">
+                {% if firm.type.firm_type_code == 'vc' %}
+                    <i class="fa fa-university fa-lg"></i>
+                {% elif firm.type.firm_type_code == 'ai' %}
+                    <i class="fa fa-rocket fa-lg"></i>
+                {% elif firm.type.firm_type_code == 'su' %}
+                    <i class="fa fa-building-o fa-lg"></i>
+                {% endif %}
+                {{ firm.name }}
+            </h1>
         </div>
     </div>
     <!-- end startup name header -->
@@ -43,29 +52,29 @@
         </div>
         <!-- end billing history -->
 
-        <!--  optimiztion donut chart -->
+        <!--  penetration donut chart -->
         <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-money fa-fw"></i> Optimization Percentage
+                    <i class="fa fa-pie-chart fa-fw"></i> M+ Penetration
                 </div>
                 <div class="panel-body">
-                    <div id="optmization-donut-chart"></div>
+                    <div id="penetration-donut-chart"></div>
                 </div>
             </div>
         </div>
-        <!-- end optimization donut chart -->
+        <!-- end penetration donut chart -->
 
     </div>
     <!-- ./row -->
 
 
-    <!-- vc firms table -->
+    <!-- startups table -->
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-university fa-fw"></i> Venture Capital Firm Relationships
+                    <i class="fa fa-lightbulb-o fa-fw"></i> Startup Relationships
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -73,72 +82,40 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Owner</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th>Charges</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            {% for company in companies %}
                                 <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
+                                    <td>
+                                        {{ loop.index }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('main.company', id=company.Company.id) }}">{{ company.Company.name }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('main.user', username=company.User.username) }}">{{ company.User.username }}</a>
+                                    </td>
+                                    <td>
+                                        {{ company.Company.city }}
+                                    </td>
+                                    <td>
+                                        {{ company.Company.state }}
+                                    </td>
+                                    <td>
+                                        {{ company.Company.country }}
+                                    </td>
+                                    <td>
+                                        $10,000
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -150,191 +127,7 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    <!-- end vc firms table -->
-
-    <!-- ai firms table -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-rocket fa-fw"></i> Accelerator and Incubator Relationships
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.table-responsive -->
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
-    <!-- end top ai firms table -->
-
-    <!-- accounts table -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-key fa-fw"></i> Accounts
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.table-responsive -->
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
-    <!-- end account id table -->
+    <!-- end startups table -->
 
 {% endblock %}
 
@@ -345,6 +138,6 @@
 <!-- Morris Chart Data -->
 <script src="{{ url_for('static', filename='sb-admin-2/bower_components/raphael/raphael-min.js') }}"></script>
 <script src="{{ url_for('static', filename='sb-admin-2/bower_components/morrisjs/morris.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/morris-data-startup.js') }}"></script>
+<script src="{{ url_for('static', filename='js/morris-data-firm.js') }}"></script>
 
 {% endblock scripts %}

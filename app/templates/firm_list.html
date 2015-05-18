@@ -7,7 +7,7 @@
 
     <!-- page header -->
     <div class="page-header">
-        <h1>{{ title }} Owned By {{ user.username }}</h1>
+        <h1>{{ title }} <small>Owned By {{ user.username }}</small></h1>
     </div>
     <!-- end page header -->
 
@@ -16,7 +16,14 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-university fa-fw"></i> {{ title }}
+                    {% if type_code == 'vc' %}
+                        <i class="fa fa-university fa-lg"></i>
+                    {% elif type_code == 'ai' %}
+                        <i class="fa fa-rocket fa-lg"></i>
+                    {% elif type_code == 'su' %}
+                        <i class="fa fa-building-o fa-lg"></i>
+                    {% endif %}
+                    {{ title }}
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -32,10 +39,13 @@
                                     <th>Country</th>
                                 </tr>
                             </thead>
+                            <tbody>
                             {% for firm in firms %}
                             <tr>
                                 <td>
-                                    {{ firm.name }}
+                                    <a href="{{ url_for('main.firm', id=firm.id) }}">
+                                        {{ firm.name }}
+                                    </a>
                                 </td>
                                 <td>
                                     {{ firm.type }}
@@ -59,6 +69,7 @@
                                 </td>
                             </tr>
                             {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                     <!-- /.table-responsive -->

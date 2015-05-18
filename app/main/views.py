@@ -196,9 +196,13 @@ def company(id):
 @main.route('/firm/<int:id>')
 @login_required
 def firm(id):
-    # user = User.query.filter_by(username=username).first_or_404()
-    # posts = user.posts.order_by(Post.timestamp.desc()).all()
-    return render_template('firm.html')
+    firm = Firm.query\
+        .join(FirmType).join(FirmTier).filter(Firm.id == id).first()
+    if firm is None:
+        flash('Relationship Does Not Exist.', 'error')
+        return redirect(url_for('main.index'))
+    companies = firm.related_companies()
+    return render_template('firm.html', firm=firm, companies=companies)
 
 
 @main.route('/firms/<username>')
@@ -215,23 +219,25 @@ def firms(username):
 
     # format firm type
     firm_type = FirmType.query.filter_by(firm_type_code=firm_type_code).first()
-    firm_type = firm_type.firm_type
     from inflect import engine
     p = engine()
-    firm_type_p = p.plural(firm_type)
+    firm_type_full = firm_type.firm_type
+    firm_type_code = firm_type.firm_type_code
+    firm_type_p = p.plural(firm_type_full)
 
     # pagenation query for firms
     query = Firm.query\
                 .join(FirmType, FirmType.id == Firm.firm_type_id)\
                 .join(FirmTier, FirmTier.id == Firm.firm_tier_id)\
                 .filter(Firm.user_id == user.id,
-                        FirmType.firm_type == firm_type)\
+                        FirmType.firm_type == firm_type_full)\
                 .order_by(FirmTier.firm_tier.asc(),
                           Firm.name.asc())
     pagination = query.paginate(
         page, per_page=current_app.config['FOLLOWERS_PER_PAGE'],
         error_out=False)
-    firms = [{'name': item.name,
+    firms = [{'id': item.id,
+              'name': item.name,
               'type': item.type.firm_type,
               'tier': item.tier.firm_tier,
               'owner': item.owner,
@@ -240,7 +246,7 @@ def firms(username):
               'country': item.country}
              for item in pagination.items]
     return render_template('firm_list.html', user=user,
-                           title=firm_type_p,
+                           title=firm_type_p, type_code=firm_type_code,
                            endpoint='main.firms', pagination=pagination,
                            firms=firms)
 
