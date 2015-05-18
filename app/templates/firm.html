@@ -4,18 +4,19 @@
 {% block wrapper %}
 
     <!-- startup name header -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                {% if firm.type.firm_type_code == 'vc' %}
-                    <i class="fa fa-university fa-lg"></i>
-                {% elif firm.type.firm_type_code == 'ai' %}
-                    <i class="fa fa-rocket fa-lg"></i>
-                {% elif firm.type.firm_type_code == 'su' %}
-                    <i class="fa fa-building-o fa-lg"></i>
-                {% endif %}
-                {{ firm.name }}
-            </h1>
+    <div class="page-header">
+        {% if firm.type.firm_type_code == 'vc' %}
+            <i class="fa fa-university fa-5 firm-thumbnail"></i>
+        {% elif firm.type.firm_type_code == 'ai' %}
+            <i class="fa fa-rocket fa-6 firm-thumbnail"></i>
+        {% elif firm.type.firm_type_code == 'su' %}
+            <i class="fa fa-building-o fa-6 firm-thumbnail"></i>
+        {% endif %}
+        <div class="firm-header">
+            <h1>{{ firm.name }}<br><small>{{firm.tier.firm_tier}} | {{ firm.type.firm_type }}</small></h1>
+            <p>Located in <strong>{{ firm.country }}</strong>.</p>
+            <p>Managed by <strong><a href="{{ url_for('main.user', username=firm.owner.username) }}">{{ firm.owner.username }}</a></strong>.</p>
+            <p>Related to <strong>{{ companies|length }} Startups</strong>.</p>
         </div>
     </div>
     <!-- end startup name header -->

@@ -1,15 +1,34 @@
-/* profile page */
+/* top menu */
 .dropdown-menu {
     min-width: 180px;
 }
 
-/* profile page */
+/* user profile page */
 .profile-thumbnail {
     position: absolute;
 }
 .profile-header {
     min-height: 260px;
     margin-left: 280px;
+}
+
+/* firm and startup pages */
+.firm-thumbnail {
+    position: absolute;
+    margin-left: 5px;
+}
+.firm-header {
+    min-height: 190px;
+    margin-left: 210px;
+}
+.fa-6 {
+  font-size: 13em;
+}
+.fa-5 {
+  font-size: 11em;
+}
+.firm-header p {
+    color: #777;
 }
 
 /* blog posts */

@@ -188,16 +188,23 @@ def followed_by(username):
 @main.route('/company/<int:id>')
 @login_required
 def company(id):
-    # user = User.query.filter_by(username=username).first_or_404()
-    # posts = user.posts.order_by(Post.timestamp.desc()).all()
-    return render_template('startup.html')
+    company = Company.query.join(User).filter(Company.id == id).first()
+    if company istype None:
+        flash('Company Does Not Exist.', 'error')
+        return redirect(url_for('main.index'))
+    vc_firms = company.related_firms('vc')
+    ai_firms = company.related_firms('ai')
+    su_orgs = company.related_firms('su')
+    return render_template('startup.html', company=company, vc_firms=vc_firms,
+                           ai_firms=ai_firms, su_orgs=su_orgs)
 
 
 @main.route('/firm/<int:id>')
 @login_required
 def firm(id):
     firm = Firm.query\
-        .join(FirmType).join(FirmTier).filter(Firm.id == id).first()
+        .join(FirmType).join(FirmTier).join(User)\
+        .filter(Firm.id == id).first()
     if firm is None:
         flash('Relationship Does Not Exist.', 'error')
         return redirect(url_for('main.index'))

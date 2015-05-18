@@ -494,5 +494,16 @@ class Company(db.Model):
             except IntegrityError:
                 db.session.rollback()
 
+    def related_firms(self, firm_type_code):
+        """
+        Returns a sqlalchemy collection of Firms and Owners.
+        """
+        q = Firm.query\
+            .join(User).join(Relationship).join(FirmType).join(FirmTier)\
+            .filter(Relationship.companies == self,
+                    FirmType.firm_type_code == firm_type_code)\
+            .add_entity(User).add_entity(FirmType).add_entity(FirmTier)
+        return q.all()
+
     def __repr__(self):
         return '<Company {}>'.format(self.name)
