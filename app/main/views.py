@@ -189,7 +189,7 @@ def followed_by(username):
 @login_required
 def company(id):
     company = Company.query.join(User).filter(Company.id == id).first()
-    if company istype None:
+    if company is None:
         flash('Company Does Not Exist.', 'error')
         return redirect(url_for('main.index'))
     vc_firms = company.related_firms('vc')
