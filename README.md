@@ -44,6 +44,19 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
 
 # Database Operations
 
+**PostgreSQL Database Operations
+
+1. `pg_ctl` is a utility to initialize, start, stop, or control a PostgreSQL server.
+  * `pg_ctl status -D DATADIR` shows the status of a PostgreSQL database.
+  * `pg_ctl start -D DATADIR` starts the PostgreSQL server
+  * `pg_ctl stop -D DATADIR` stops the PostgreSQL server.
+  * `pg_ctl stop -D DATADIR -m fast` immediately stops the PostgreSQL server rather than waiting for session-initiated disconnection.
+2. `postgres` is the PostgreSQL server.
+  * `postgres -D DATADIR` starts the PostgreSQL server.
+3. `psql` is the PostgreSQL interactive terminal.
+  * `psql -d DATABASE` connects to a given database.
+  * `psql -l` lists all available databases.
+
 **Destroy and Rebuild Database**
 
 1. The positional argument 'db_rebuild' will delete any existing sqlite database and create a new devlopment database populated with fake data.
