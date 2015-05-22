@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify
 from flask_login import login_required
 from . import search
 from ..models import Firm, Company
@@ -14,18 +14,25 @@ def search_app(query):
     return jsonify(results=json_results)
 
 
-@search.route('/_typeahead')
+@search.route('/_typeahead/<query>')
 @login_required
-def typeahead():
-    results = Firm.query\
-        .filter(Firm.name.ilike('%{}%'.format(query)))\
-        .order_by(Firm.name.asc()).all()
-    json_results = [{'id': item.id, 'name': item.name} for item in results]
+def typeahead(query):
+    firms = Firm.query.with_entities(Firm.name)
+    companies = Company.query.with_entities(Company.name)
+    results = firms.union(companies)\
+        .filter(Firm.name.ilike('{}%'.format(query)))\
+        .order_by(Firm.name.asc())\
+        .limit(15).all()
+    json_results = [{'name': item.name} for item in results]
     return jsonify(results=json_results)
-    return jsonify(results=results)
 
 
 @search.route('/_typeahead/prefetch')
 @login_required
 def typeahead_prefetch():
-    return jsonify(results=results)
+    firms = Firm.query.with_entities(Firm.name)
+    companies = Company.query.with_entities(Company.name)
+    results = firms.union(companies)\
+        .order_by(Firm.name.asc()).all()
+    json_results = [{'name': item.name} for item in results]
+    return jsonify(results=json_results)
