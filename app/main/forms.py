@@ -5,11 +5,6 @@ from wtforms.validators import Required, Length, Email, Regexp
 from ..models import Role, User
 
 
-class SearchForm(Form):
-    company = StringField('Company Name', validators=[Required()])
-    submit = SubmitField('Search')
-
-
 class EditProfileForm(Form):
     name = StringField('Real name', validators=[Length(0, 64)])
     location = StringField('Location', validators=[Length(0, 64)])

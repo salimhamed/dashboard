@@ -397,7 +397,7 @@ class FirmTier(db.Model):
 class Firm(db.Model):
     __tablename__ = 'firms'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(900), nullable=False, index=True)
+    name = db.Column(db.String(900), unique=True, nullable=False, index=True)
     city = db.Column(db.String(100))
     state = db.Column(db.String(100))
     country = db.Column(db.String(100))
@@ -458,7 +458,7 @@ class Firm(db.Model):
 class Company(db.Model):
     __tablename__ = 'companies'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(900), nullable=False, index=True)
+    name = db.Column(db.String(900), unique=True, nullable=False, index=True)
     city = db.Column(db.String(100))
     state = db.Column(db.String(100))
     country = db.Column(db.String(100))

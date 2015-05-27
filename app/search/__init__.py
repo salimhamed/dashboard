@@ -11,3 +11,14 @@ search = Blueprint(
 # imported after the Blueprint object is instantiated because they rely on the
 # Blueprint object to define routes and error handles
 from . import views
+
+
+from .forms import SearchForm
+
+
+# To avoid having to add a template argument in every 'render_template' call,
+# the Search form is passed as a context processor.  This makes the
+# Search form globally available to all templates.
+@search.app_context_processor
+def inject_search():
+    return dict(SearchForm=SearchForm())

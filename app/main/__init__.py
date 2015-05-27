@@ -16,7 +16,7 @@ from . import views, errors
 from ..models import Permission
 
 
-# To avoid having to add a tamplate argument in every 'render_template' call,
+# To avoid having to add a template argument in every 'render_template' call,
 # the Permission class is pass as a context processor.  This makes the
 # Permission class globally available to all templates.
 @main.app_context_processor
