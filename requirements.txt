@@ -32,3 +32,4 @@ six==1.9.0
 texttable==0.8.3
 websocket-client==0.30.0
 wsgiref==0.1.2
+psycopg2

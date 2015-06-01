@@ -258,64 +258,108 @@ def firms(username):
                            firms=firms)
 
 
+@main.route('/firmlist')
+@login_required
+def firmlist():
+    user = User.query.first()
+    if user is None:
+        flash('Invalid user.', 'error')
+        return redirect(url_for('main.index'))
+
+    # get request arguments
+    firm_type_code = request.args.get('firm_type_code', 'vc', type=str)
+    page = request.args.get('page', 1, type=int)
+
+    # format firm type
+    firm_type = FirmType.query.filter_by(firm_type_code=firm_type_code).first()
+    from inflect import engine
+    p = engine()
+    firm_type_full = firm_type.firm_type
+    firm_type_code = firm_type.firm_type_code
+    firm_type_p = p.plural(firm_type_full)
+
+    # pagenation query for firms
+    query = Firm.query\
+                .join(FirmType, FirmType.id == Firm.firm_type_id)\
+                .join(FirmTier, FirmTier.id == Firm.firm_tier_id)\
+                .filter(Firm.user_id == user.id,
+                        FirmType.firm_type == firm_type_full)\
+                .order_by(FirmTier.firm_tier.asc(),
+                          Firm.name.asc())
+    pagination = query.paginate(
+        page, per_page=current_app.config['FOLLOWERS_PER_PAGE'],
+        error_out=False)
+    firms = [{'id': item.id,
+              'name': item.name,
+              'type': item.type.firm_type,
+              'tier': item.tier.firm_tier,
+              'owner': item.owner,
+              'city': item.city,
+              'state': item.state,
+              'country': item.country}
+             for item in pagination.items]
+    return render_template('firm_list.html', user=user,
+                           title=firm_type_p, type_code=firm_type_code,
+                           endpoint='main.firms', pagination=pagination,
+                           firms=firms)
+
+
+
 @main.route('/_search')
 @login_required
 def search():
     query = request.args.get('query', '', type=str).lower()
-    results = [
-        {'id': 1, 'name': 'Alabama'},
-        {'id': 2, 'name': 'Arizona'},
-        {'id': 3, 'name': 'Arkansas'},
-        {'id': 4, 'name': 'California'},
-        {'id': 5, 'name': 'Colorado'},
-        {'id': 6, 'name': 'Connecticut'},
-        {'id': 7, 'name': 'Delaware'},
-        {'id': 8, 'name': 'Florida'},
-        {'id': 9, 'name': 'Georgia'},
-        {'id': 10, 'name': 'Hawaii'},
-        {'id': 11, 'name': 'Idaho'},
-        {'id': 12, 'name': 'Illinois'},
-        {'id': 13, 'name': 'Indiana'},
-        {'id': 14, 'name': 'Iowa'},
-        {'id': 15, 'name': 'Kansas'},
-        {'id': 16, 'name': 'Kentucky'},
-        {'id': 17, 'name': 'Louisiana'},
-        {'id': 18, 'name': 'Maine'},
-        {'id': 19, 'name': 'Maryland'},
-        {'id': 20, 'name': 'Massachusetts'},
-        {'id': 21, 'name': 'Michigan'},
-        {'id': 22, 'name': 'Minnesota'},
-        {'id': 23, 'name': 'Mississippi'},
-        {'id': 24, 'name': 'Missouri'},
-        {'id': 25, 'name': 'Montana'},
-        {'id': 26, 'name': 'Nebraska'},
-        {'id': 27, 'name': 'Nevada'},
-        {'id': 28, 'name': 'New Hampshire'},
-        {'id': 29, 'name': 'New Jersey'},
-        {'id': 30, 'name': 'New Mexico'},
-        {'id': 31, 'name': 'New York'},
-        {'id': 32, 'name': 'North Carolina'},
-        {'id': 33, 'name': 'North Dakota'},
-        {'id': 34, 'name': 'Ohio'},
-        {'id': 35, 'name': 'Oklahoma'},
-        {'id': 36, 'name': 'Oregon'},
-        {'id': 37, 'name': 'Pennsylvania'},
-        {'id': 38, 'name': 'Rhode Island'},
-        {'id': 39, 'name': 'South Carolina'},
-        {'id': 40, 'name': 'South Dakota'},
-        {'id': 41, 'name': 'Tennessee'},
-        {'id': 42, 'name': 'Texas'},
-        {'id': 43, 'name': 'Utah'},
-        {'id': 44, 'name': 'Vermont'},
-        {'id': 45, 'name': 'Virginia'},
-        {'id': 46, 'name': 'Washington'},
-        {'id': 47, 'name': 'West Virginia'},
-        {'id': 48, 'name': 'Wisconsin'},
-        {'id': 49, 'name': 'Wyoming'},
-    ]
+    results = [{'id': n.id, 'name': n.name} for n in Firm.query.all()]
     rt_results = [l for l in results if l['name'].lower().startswith(query)]
     return jsonify(results=rt_results)
-    # return Response(json.dumps(rt_results), mimetype='application/json')
+
+
+@main.route('/results', methods=['POST'])
+@login_required
+def results():
+    query = request.form['query'].lower()
+    results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query.all()]
+    rt_results = [l for l in results if l['name'].lower().startswith(query)]
+    return render_template('results.html', title="Search Results", firms=rt_results)
+
+
+
+@main.route('/startups')
+@login_required
+def startups():
+    results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query\
+        .join(FirmType).join(FirmTier)\
+        .filter(FirmType.firm_type == "Startup Organization")] # Firm.query.all().filter(Firm.type == "")]
+    return render_template('results.html', title="Startups", firms=results)
+
+
+
+
+@main.route('/ventures')
+@login_required
+def ventures():
+    results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query\
+        .join(FirmType).join(FirmTier)\
+        .filter(FirmType.firm_type == "Venture Capital Firm")] # Firm.query.all().filter(Firm.type == "")]
+    return render_template('results.html', title="Venture Capital", firms=results)
+
+
+
+@main.route('/incubators')
+@login_required
+def incubators():
+    results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query\
+        .join(FirmType).join(FirmTier)\
+        .filter(FirmType.firm_type == "Accelerator and Incubator")] # Firm.query.all().filter(Firm.type == "")]
+    return render_template('results.html', title="Accelerators and Incubators", firms=results)
+
+
+@main.route('/users')
+@login_required
+def users():
+    results = [{'id': n.id, 'name': n.name, 'username': n.username, 'email': n.email, 'location': n.location} for n in User.query.all()] 
+    # print(results)
+    return render_template('userlist.html', title="Insight Users", users=results)
 
 
 @main.route('/_search_prefetch')

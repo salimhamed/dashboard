@@ -155,14 +155,16 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
-                    <div id="bloodhound" class="input-group custom-search-form">
-                        <input type="text" class="typeahead form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        </span>
-                    </div>
+                    <form action="/results" method="post">
+                        <div id="bloodhound" class="input-group custom-search-form">
+                            <input type="text" class="typeahead form-control" name="query" type="search" data-provide="typeahead" placeholder="Search...">
+                            <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            </span>
+                        </div>
+                    </form>
                 </li>
                 <li>
                     <a href="{{ url_for('main.index') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
@@ -171,21 +173,18 @@
                     <a href="#"><i class="fa fa-cubes fa-fw"></i> Relationships<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#"><i class="fa fa-lightbulb-o fa-fw"></i> Startup Companies</a>
+                            <a href="/startups"><i class="fa fa-lightbulb-o fa-fw"></i> Startup Companies</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-university fa-fw"></i> Venture Capital Firms</a>
+                            <a href="/ventures"><i class="fa fa-university fa-fw"></i> Venture Capital Firms</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-rocket fa-fw"></i> Acclerators and Incubators</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-building-o fa-fw"></i> Startup Organizations</a>
+                            <a href="/incubators"><i class="fa fa-rocket fa-fw"></i> Acclerators and Incubators</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                <li>
+<!--                 <li>
                     <a href="#"><i class="fa fa-files-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -201,14 +200,13 @@
                             <a href="#"><i class="fa fa-file-o fa-fw"></i> Report 4</a>
                         </li>
                     </ul>
-                    <!-- /.nav-second-level -->
-                </li>
+                </li> -->
                 <li>
-                    <a href="#"><i class="fa fa-users fa-fw"></i> Users</a>
+                    <a href="/users"><i class="fa fa-users fa-fw"></i> Users</a>
                 </li>
-                <li>
+<!--                 <li>
                     <a href="#"><i class="fa fa-bullseye fa-fw"></i> Goals</a>
-                </li>
+                </li> -->
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
