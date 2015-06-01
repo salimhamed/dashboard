@@ -29,11 +29,12 @@ class DevelopmentConfigPsql(Config):
     2) start psql server with 'postgres -D pgdb'
     """
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = \
-        os.environ.get(
-            'DEV_DATABASE_URL',
-            'postgresql://localhost:5432/db_dev'
-        )
+    # SQLALCHEMY_DATABASE_URI = \
+    #     os.environ.get(
+    #         'DEV_DATABASE_URL',
+    #         'postgresql://localhost:5432/db_dev'
+    #     )
+    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://"+os.environ.get("PG_ADMIN")+":"+os.environ.get("PG_PASSWORD")+"@localhost/dashboard"
 
 
 class DevelopmentConfigSqlite(Config):
