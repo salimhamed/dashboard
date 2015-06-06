@@ -5,6 +5,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app, request
 from flask_login import UserMixin, AnonymousUserMixin
 from . import db, login_manager
+from sqlalchemy import func
 
 
 class Permission:
@@ -278,6 +279,28 @@ class User(UserMixin, db.Model):
             query = query.join(FirmTier)\
                 .filter(FirmTier.firm_tier == firm_tier)
         return query.count()
+
+    def firm_summary(self):
+        """
+        Returns summary of firm relationships.
+        """
+        query = self.firms.join(FirmType).join(FirmTier)\
+            .with_entities(FirmType.firm_type_code, FirmTier.firm_tier,
+                           func.count(Firm.id))\
+            .group_by(FirmType.firm_type_code, FirmTier.firm_tier)
+
+        t1 = {'type': 'Tier 1'}
+        t2 = {'type': 'Tier 2'}
+        t3 = {'type': 'Tier 3'}
+        for item in query.all():
+            if item.firm_tier == 'Tier 1':
+                t1[item.firm_type_code] = item[2]
+            if item.firm_tier == 'Tier 2':
+                t2[item.firm_type_code] = item[2]
+            if item.firm_tier == 'Tier 3':
+                t3[item.firm_type_code] = item[2]
+
+        return [t1, t2, t3]
 
     def top_firms(self, n=10, firm_type_code=None, firm_tier=None):
         """

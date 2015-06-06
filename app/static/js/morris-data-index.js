@@ -1,20 +1,28 @@
+// define root api url
+var api_url = 'http://' + $SCRIPT_ROOT + '/_api/';
+
+
 // relationship summary bar chart
-var relationship_summary = Morris.Bar({
-    element: 'firm-bar-chart',
-    data: [
-        { type: 'Tier 1', vc: 100, ai: 89, su: 30 },
-        { type: 'Tier 2', vc: 75, ai: 70, su:45 },
-        { type: 'Tier 3', vc: 50, ai: 45, su:10 }
-    ],
-    xkey: 'type',
-    ykeys: ['vc', 'ai', 'su'],
-    labels: ['Venture Captial', 'Accelerator', 'Startup Org'],
-    hideHover: 'auto',
-    resize: true
+$.getJSON(
+    api_url + 'firm_summary',
+    function(chart_data) {
+
+        var relationship_summary = Morris.Bar({
+            element: 'firm-bar-chart',
+            data: chart_data,
+            xkey: 'type',
+            ykeys: ['vc', 'ai', 'su'],
+            labels: ['Venture Captial', 'Accelerator', 'Startup Org'],
+            hideHover: 'auto',
+            resize: true
+        });
+
+        relationship_summary.on('click', function(i, row) {
+            console.log(i, row);
+        });
+
 });
-relationship_summary.on('click', function(i, row) {
-    console.log(i, row);
-});
+
 
 
 // ai penetration donut
