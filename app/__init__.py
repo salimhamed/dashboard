@@ -54,4 +54,10 @@ def create_app(config_name):
     # be registered with the prefix '/search' (e.g., '/search/_prefetch')
     app.register_blueprint(search_blueprint, url_prefix='/search')
 
+    # register 'api' blueprint with Flask application
+    from .api import api as api_blueprint
+    # the 'url_prefix' parameter means all routes defined in the blueprint will
+    # be registered with the prefix '/_api' (e.g., '/_api/relationships')
+    app.register_blueprint(api_blueprint, url_prefix='/_api')
+
     return app
