@@ -77,7 +77,7 @@ def db_rebuild():
     db.session.commit()
 
     # insert fake user data
-    User.generate_fake(200)
+    User.generate_fake(60)
 
     # insert fake post data
     Post.generate_fake(400)

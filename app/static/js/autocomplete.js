@@ -1,31 +1,16 @@
 $(document).ready(function() {
     // define web url
-    var search_url = 'http://' + $SCRIPT_ROOT
-    var prefetch_url = 'http://' + $SCRIPT_ROOT
+    var search_url = 'http://' + $SCRIPT_ROOT + '/search/_ta_remote/'
+    var prefetch_url = 'http://' + $SCRIPT_ROOT + '/search/_ta_prefetch'
 
     // Set up "Bloodhound" Options
     var suggestion_class = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('vval'),
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-
-        prefetch: {
-            url: search_url + '/_search_prefetch',
-            filter: function(x) {
-                return $.map(x.results, function(item) {
-                    return {vval: item.name, vid: item.id};
-
-                });
-            }
-        },
-
+        sufficient: 5,
+        prefetch: prefetch_url,
         remote: {
-             url: search_url + '/_search?query=%QUERY',
-             filter: function(x) {
-                console.log(x)
-                 return $.map(x.results, function(item) {
-                     return {vval: item.name, vid: item.id};
-                 });
-             },
+             url: search_url + '%QUERY',
              wildcard: "%QUERY"
          }
     });
@@ -38,10 +23,26 @@ $(document).ready(function() {
         minLength: 1,
     },
     {
-        name: 'vval',
-        displayKey: 'vval',
+        name: 'firm-company',
+        display: 'name',
         limit: 10,
         source: suggestion_class
     });
 
 });
+
+// var bestPictures = new Bloodhound({
+//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+//   prefetch: '../data/films/post_1960.json',
+//   remote: {
+//     url: '../data/films/queries/%QUERY.json',
+//     wildcard: '%QUERY'
+//   }
+// });
+//
+// $('#remote .typeahead').typeahead(null, {
+//   name: 'best-pictures',
+//   display: 'value',
+//   source: bestPictures
+// });

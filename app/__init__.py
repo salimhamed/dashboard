@@ -48,4 +48,10 @@ def create_app(config_name):
     # be registered with the prefix '/auth' (e.g., '/auth/login')
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
+    # register 'search' blueprint with Flask application
+    from .search import search as search_blueprint
+    # the 'url_prefix' parameter means all routes defined in the blueprint will
+    # be registered with the prefix '/search' (e.g., '/search/_prefetch')
+    app.register_blueprint(search_blueprint, url_prefix='/search')
+
     return app

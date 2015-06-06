@@ -257,7 +257,6 @@ def firms(username):
                            endpoint='main.firms', pagination=pagination,
                            firms=firms)
 
-
 @main.route('/firmlist')
 @login_required
 def firmlist():
@@ -357,7 +356,7 @@ def incubators():
 @main.route('/users')
 @login_required
 def users():
-    results = [{'id': n.id, 'name': n.name, 'username': n.username, 'email': n.email, 'location': n.location} for n in User.query.all()] 
+    results = [{'id': n.id, 'name': n.name, 'username': n.username, 'email': n.email, 'location': n.location} for n in User.query.all()]
     # print(results)
     return render_template('userlist.html', title="Insight Users", users=results)
 
