@@ -192,73 +192,49 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Tier</th>
+                                    <th>Owner</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th>Charges</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
+                            {% for firm in top_vc_firms %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('main.firm', id=firm.Firm.id) }}">
+                                        {{ firm.Firm.name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ firm.FirmType.firm_type }}
+                                </td>
+                                <td>
+                                    {{ firm.FirmTier.firm_tier }}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('main.user', username = firm.Firm.owner.username) }}">
+                                        {{ firm.Firm.owner.username }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ firm.Firm.city }}
+                                </td>
+                                <td>
+                                    {{ firm.Firm.state }}
+                                </td>
+                                <td>
+                                    {{ firm.Firm.country }}
+                                </td>
+                                <td>
+                                    $10,000
+                                </td>
+                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -285,73 +261,49 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Tier</th>
+                                    <th>Owner</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th>Charges</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
+                            {% for firm in top_ai_firms %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('main.firm', id=firm.Firm.id) }}">
+                                        {{ firm.Firm.name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ firm.FirmType.firm_type }}
+                                </td>
+                                <td>
+                                    {{ firm.FirmTier.firm_tier }}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('main.user', username = firm.Firm.owner.username) }}">
+                                        {{ firm.Firm.owner.username }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ firm.Firm.city }}
+                                </td>
+                                <td>
+                                    {{ firm.Firm.state }}
+                                </td>
+                                <td>
+                                    {{ firm.Firm.country }}
+                                </td>
+                                <td>
+                                    $10,000
+                                </td>
+                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -378,73 +330,49 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Tier</th>
+                                    <th>Owner</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th>Charges</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
+                            {% for firm in top_su_firms %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('main.firm', id=firm.Firm.id) }}">
+                                        {{ firm.Firm.name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ firm.FirmType.firm_type }}
+                                </td>
+                                <td>
+                                    {{ firm.FirmTier.firm_tier }}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('main.user', username = firm.Firm.owner.username) }}">
+                                        {{ firm.Firm.owner.username }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ firm.Firm.city }}
+                                </td>
+                                <td>
+                                    {{ firm.Firm.state }}
+                                </td>
+                                <td>
+                                    {{ firm.Firm.country }}
+                                </td>
+                                <td>
+                                    $10,000
+                                </td>
+                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

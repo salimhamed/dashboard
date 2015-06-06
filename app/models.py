@@ -5,7 +5,6 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app, request
 from flask_login import UserMixin, AnonymousUserMixin
 from . import db, login_manager
-from sqlalchemy import func
 
 
 class Permission:
@@ -279,6 +278,18 @@ class User(UserMixin, db.Model):
             query = query.join(FirmTier)\
                 .filter(FirmTier.firm_tier == firm_tier)
         return query.count()
+
+    def top_firms(self, n=10, firm_type_code=None, firm_tier=None):
+        """
+        Returns the top firms for a given firm type code and firm tier.
+        """
+        query = self.firms.join(FirmType).join(FirmTier)\
+            .with_entities(Firm, FirmType, FirmTier)
+        if firm_type_code:
+            query = query.filter(FirmType.firm_type_code == firm_type_code)
+        if firm_tier:
+            query = query.filter(FirmTier.firm_tier == firm_tier)
+        return query.limit(n).all()
 
     def __repr__(self):
         return '<User %r>' % self.username

@@ -14,7 +14,12 @@ def index():
     if current_user.is_anonymous():
         return redirect(url_for('auth.login'))
     else:
-        return render_template('index.html')
+        top_vc_firms = current_user.top_firms(n=10, firm_type_code='vc')
+        top_ai_firms = current_user.top_firms(n=10, firm_type_code='ai')
+        top_su_firms = current_user.top_firms(n=10, firm_type_code='su')
+        return render_template('index.html', top_vc_firms=top_vc_firms,
+                               top_ai_firms=top_ai_firms,
+                               top_su_firms=top_su_firms)
 
 
 @main.route('/user/<username>')
