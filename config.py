@@ -50,8 +50,8 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = \
-        "postgresql+psycopg2://" + os.environ.get("PG_ADMIN") + ":" + \
-        os.environ.get("PG_PASSWORD") + "@localhost/dashboard"
+        "postgresql+psycopg2://" + os.environ.get("PG_ADMIN", 'admin') + ":" \
+        + os.environ.get("PG_PASSWORD", 'password') + "@localhost/dashboard"
 
 
 config = {
