@@ -28,7 +28,7 @@
                             <i class="fa fa-university fa-4x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="panel-data">26</div>
+                            <div class="panel-data">{{ current_user.firm_count('vc') }}</div>
                             <div>Venture Capital Firms</div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             <i class="fa fa-rocket fa-4x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="panel-data">26</div>
+                            <div class="panel-data">{{ current_user.firm_count('ai') }}</div>
                             <div>Accelerators and Incubators</div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                             <i class="fa fa-building-o fa-4x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="panel-data">26</div>
+                            <div class="panel-data">{{ current_user.firm_count('su') }}</div>
                             <div>Startup Organizations</div>
                         </div>
                     </div>

@@ -235,6 +235,7 @@ def firms(username):
                            endpoint='main.firms', pagination=pagination,
                            firms=firms)
 
+
 @main.route('/firmlist')
 @login_required
 def firmlist():
@@ -281,7 +282,6 @@ def firmlist():
                            firms=firms)
 
 
-
 @main.route('/_search')
 @login_required
 def search():
@@ -300,7 +300,6 @@ def results():
     return render_template('results.html', title="Search Results", firms=rt_results)
 
 
-
 @main.route('/startups')
 @login_required
 def startups():
@@ -310,8 +309,6 @@ def startups():
     return render_template('results.html', title="Startups", firms=results)
 
 
-
-
 @main.route('/ventures')
 @login_required
 def ventures():
@@ -319,7 +316,6 @@ def ventures():
         .join(FirmType).join(FirmTier)\
         .filter(FirmType.firm_type == "Venture Capital Firm")] # Firm.query.all().filter(Firm.type == "")]
     return render_template('results.html', title="Venture Capital", firms=results)
-
 
 
 @main.route('/incubators')

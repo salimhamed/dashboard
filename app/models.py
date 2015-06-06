@@ -5,6 +5,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app, request
 from flask_login import UserMixin, AnonymousUserMixin
 from . import db, login_manager
+from sqlalchemy import func
 
 
 class Permission:
@@ -268,6 +269,17 @@ class User(UserMixin, db.Model):
         return self.followers.filter_by(
             follower_id=user.id).first() is not None
 
+    def firm_count(self, firm_type_code, firm_tier=None):
+        """
+        Returns that count for a given firm type code.
+        """
+        query = self.firms.join(FirmType)\
+            .filter(FirmType.firm_type_code == firm_type_code)
+        if firm_tier:
+            query = query.join(FirmTier)\
+                .filter(FirmTier.firm_tier == firm_tier)
+        return query.count()
+
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -464,10 +476,10 @@ class Company(db.Model):
     country = db.Column(db.String(100))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     firms = db.relationship('Relationship',
-            foreign_keys=[Relationship.company_id],
-            backref=db.backref('companies', lazy='joined'),
-            lazy='dynamic',   # return query, not items
-            cascade='all, delete-orphan')
+                            foreign_keys=[Relationship.company_id],
+                            backref=db.backref('companies', lazy='joined'),
+                            lazy='dynamic',   # return query, not items
+                            cascade='all, delete-orphan')
 
     @staticmethod
     def generate_fake(count=100):
@@ -483,10 +495,10 @@ class Company(db.Model):
 
             # create fake company
             c = Company(name=forgery_py.name.company_name(),
-                    city=forgery_py.address.city(),
-                    state=forgery_py.address.state_abbrev(),
-                    country=forgery_py.address.country(),
-                    owner=u)
+                        city=forgery_py.address.city(),
+                        state=forgery_py.address.state_abbrev(),
+                        country=forgery_py.address.country(),
+                        owner=u)
             db.session.add(c)
             # company might not be random, in which case rollback
             try:
