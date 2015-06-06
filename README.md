@@ -44,7 +44,7 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
 
 # Database Operations
 
-**PostgreSQL Database Operations
+**PostgreSQL Database Operations**
 
 1. `pg_ctl` is a utility to initialize, start, stop, or control a PostgreSQL server.
   * `pg_ctl status -D DATADIR` shows the status of a PostgreSQL database.
