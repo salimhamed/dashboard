@@ -14,29 +14,7 @@ def index():
     if current_user.is_anonymous():
         return redirect(url_for('auth.login'))
     else:
-        form = PostForm()
-        if current_user.can(Permission.WRITE_ARTICLES) and \
-                form.validate_on_submit():
-            # 'current_user._get_current_object': get the actual user object
-            post = Post(body=form.body.data,
-                        author=current_user._get_current_object())
-            db.session.add(post)
-            return redirect(url_for('main.index'))
-        # page number to render comes from the request's query string
-        # default to the first page when no page is give
-        # 'type=int' ensures that if the argument cannot be converted to an int
-        # then the default value is returned
-        page = request.args.get('page', 1, type=int)
-        # paginate() takes the page number and the number of items per page
-        # 'error_out=False' will return an empty list for invalid pages
-        pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
-            page, per_page=current_app.config['POSTS_PER_PAGE'],
-            error_out=False)
-        posts = pagination.items
-        # the 'pagination' object has many attributes/methods that make it
-        # easy to generate page links
-        return render_template('index.html', form=form, posts=posts,
-                               pagination=pagination)
+        return render_template('index.html')
 
 
 @main.route('/user/<username>')

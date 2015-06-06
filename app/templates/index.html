@@ -459,53 +459,6 @@
     </div>
     <!-- end top startup orgs table -->
 
-
-
-    <!-- blog posts summary header -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                Blog Posts
-            </h1>
-        </div>
-    </div>
-    <!-- end blog posts summary header -->
-
-    <! -- submit posts -->
-    {% if current_user.can(Permission.WRITE_ARTICLES) %}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-pencil-square-o fa-fw"></i> Submit a Blog Post</h3>
-                </div>
-                <div class="panel-body">
-                    {{ wtf.quick_form(form) }}
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-    <! -- end submit posts -->
-
-    <! -- blog posts -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Recent Blog Posts</h3>
-                </div>
-                {% include '_posts.html' %}
-                {% if pagination %}
-                <div class="pagination">
-                    {{ macros.pagination_widget(pagination, 'main.index') }}
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <! -- end blog posts -->
-
 {% endblock %}
 
 

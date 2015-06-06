@@ -154,6 +154,7 @@
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
+
                 <li class="sidebar-search">
                     <form action="/results" method="post">
                         <div id="bloodhound" class="input-group custom-search-form">
@@ -166,9 +167,11 @@
                         </div>
                     </form>
                 </li>
+
                 <li>
                     <a href="{{ url_for('main.index') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
+
                 <li>
                     <a href="#"><i class="fa fa-cubes fa-fw"></i> Relationships<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -181,10 +184,14 @@
                         <li>
                             <a href="/incubators"><i class="fa fa-rocket fa-fw"></i> Acclerators and Incubators</a>
                         </li>
+                        <li>
+                            <a href="#"><i class="fa fa-building-o fa-fw"></i> Startup Organizations</a>
+                        </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-<!--                 <li>
+
+                <li>
                     <a href="#"><i class="fa fa-files-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -200,13 +207,16 @@
                             <a href="#"><i class="fa fa-file-o fa-fw"></i> Report 4</a>
                         </li>
                     </ul>
-                </li> -->
+                </li>
+
                 <li>
                     <a href="/users"><i class="fa fa-users fa-fw"></i> Users</a>
                 </li>
-<!--                 <li>
+
+                <li>
                     <a href="#"><i class="fa fa-bullseye fa-fw"></i> Goals</a>
-                </li> -->
+                </li>
+
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
