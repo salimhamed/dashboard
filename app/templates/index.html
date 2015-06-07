@@ -192,6 +192,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Tier</th>
@@ -205,6 +206,9 @@
                             <tbody>
                             {% for firm in top_vc_firms %}
                             <tr>
+                                <td>
+                                    {{ loop.index }}
+                                </td>
                                 <td>
                                     <a href="{{ url_for('main.firm', id=firm.Firm.id) }}">
                                         {{ firm.Firm.name }}
@@ -261,6 +265,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Tier</th>
@@ -274,6 +279,9 @@
                             <tbody>
                             {% for firm in top_ai_firms %}
                             <tr>
+                                <td>
+                                    {{ loop.index }}
+                                </td>
                                 <td>
                                     <a href="{{ url_for('main.firm', id=firm.Firm.id) }}">
                                         {{ firm.Firm.name }}
@@ -330,6 +338,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Tier</th>
@@ -343,6 +352,9 @@
                             <tbody>
                             {% for firm in top_su_firms %}
                             <tr>
+                                <td>
+                                    {{ loop.index }}
+                                </td>
                                 <td>
                                     <a href="{{ url_for('main.firm', id=firm.Firm.id) }}">
                                         {{ firm.Firm.name }}
