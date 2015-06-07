@@ -156,7 +156,7 @@
             <ul class="nav" id="side-menu">
 
                 <li class="sidebar-search">
-                    <form action="/results" method="post">
+                <form action="{{ url_for('search.search_app') }}" method="post">
                         <div id="bloodhound" class="input-group custom-search-form">
                             <input type="text" class="typeahead form-control" name="query" type="search" data-provide="typeahead" placeholder="Search...">
                             <span class="input-group-btn">
