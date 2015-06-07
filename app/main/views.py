@@ -182,6 +182,36 @@ def company(id):
                            ai_firms=ai_firms, su_orgs=su_orgs)
 
 
+@main.route('/companies/<username>')
+@login_required
+def companies(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid user.', 'error')
+        return redirect(url_for('main.index'))
+
+    # get request arguments
+    filter_user = request.args.get('filter_user', 1, type=int)
+
+    # query for companies
+    query = Company.query
+    if filter_user:
+        query = query.filter(Company.user_id == user.id)
+    query = query.order_by(Company.name.asc())
+
+    # build response dataset
+    company_list = query.all()
+    companies = [{'id': item.id,
+                  'name': item.name,
+                  'owner': item.owner,
+                  'city': item.city,
+                  'state': item.state,
+                  'country': item.country}
+                 for item in company_list]
+    return render_template('startup_list.html', user=user,
+                           filter_user=filter_user, companies=companies)
+
+
 @main.route('/firm/<int:id>')
 @login_required
 def firm(id):
@@ -257,15 +287,6 @@ def results():
     results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query.all()]
     rt_results = [l for l in results if l['name'].lower().startswith(query)]
     return render_template('results.html', title="Search Results", firms=rt_results)
-
-
-@main.route('/startups')
-@login_required
-def startups():
-    results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query\
-        .join(FirmType).join(FirmTier)\
-        .filter(FirmType.firm_type == "Startup Organization")] # Firm.query.all().filter(Firm.type == "")]
-    return render_template('results.html', title="Startups", firms=results)
 
 
 @main.route('/users')

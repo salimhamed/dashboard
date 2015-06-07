@@ -176,7 +176,7 @@
                     <a href="#"><i class="fa fa-cubes fa-fw"></i> Relationships<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#"><i class="fa fa-lightbulb-o fa-fw"></i> Startup Companies</a>
+                            <a href="{{ url_for('main.companies', username = current_user.username) }}"><i class="fa fa-lightbulb-o fa-fw"></i> Startup Companies</a>
                         </li>
                         <li>
                             <a href="{{ url_for('main.firms', username = current_user.username, firm_type_code = 'vc') }}"><i class="fa fa-university fa-fw"></i> Venture Capital Firms</a>

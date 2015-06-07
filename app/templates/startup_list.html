@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Insights - {{ title }}{% endblock %}
+
+{% block wrapper %}
+
+    <!-- page header -->
+    <div class="page-header">
+        <h1>Startup Companies {% if filter_user %} <small>Owned By {{ user.username }}</small>{% endif %}</h1>
+    </div>
+    <!-- end page header -->
+
+    <!-- table list -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-lightbulb-o fa-lg"></i> Startup Companies
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li{% if filter_user %} class="active"{% endif %}><a href="{{ url_for('main.companies', username = user.username) }}">Owned By {{ user.username }}</a></li>
+                        <li{% if not filter_user %} class="active"{% endif %}><a href="{{ url_for('main.companies', username = user.username, filter_user = 0) }}">All Startup Companies</a></li>
+                    </ul>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Owner</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for company in companies %}
+                            <tr>
+                                <td>
+                                    {{ loop.index }}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('main.company', id=company.id) }}">
+                                        {{ company.name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('main.user', username = company.owner.username) }}">
+                                        {{ company.owner.username }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ company.city }}
+                                </td>
+                                <td>
+                                    {{ company.state }}
+                                </td>
+                                <td>
+                                    {{ company.country }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- end table list -->
+
+{% endblock wrapper %}
