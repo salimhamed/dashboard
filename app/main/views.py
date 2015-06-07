@@ -5,7 +5,7 @@ from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm
 from .. import db
 from ..models import Permission, Role, User, Post, Firm, Company, FirmTier, \
-    FirmType
+    FirmType, Follow
 from ..decorators import admin_required, permission_required
 
 
@@ -28,6 +28,31 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = user.posts.order_by(Post.timestamp.desc()).all()
     return render_template('user.html', user=user, posts=posts)
+
+
+@main.route('/users/<username>')
+@login_required
+def users(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid user.', 'error')
+        return redirect(url_for('main.index'))
+
+    # get request arguments
+    followed = request.args.get('followed', 1, type=int)
+
+    # query for users
+    if followed:
+        results = user.followed.order_by(Follow.timestamp.desc()).all()
+        users = [{'user': item.followed, 'timestamp': item.timestamp}
+                 for item in results]
+    else:
+        results = User.query.order_by(User.username.asc()).all()
+        users = [{'user': item, 'timestamp': None}
+                 for item in results]
+
+    return render_template('user_list.html', user=user, users=users,
+                           followed=followed)
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
@@ -269,11 +294,3 @@ def firms(username):
                            title=firm_type_p, type_code=firm_type_code,
                            filter_user=filter_user, endpoint='main.firms',
                            firms=firms)
-
-
-@main.route('/users')
-@login_required
-def users():
-    results = [{'id': n.id, 'name': n.name, 'username': n.username, 'email': n.email, 'location': n.location} for n in User.query.all()]
-    # print(results)
-    return render_template('userlist.html', title="Insight Users", users=results)

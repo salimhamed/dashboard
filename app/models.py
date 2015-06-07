@@ -69,6 +69,7 @@ class Follow(db.Model):
     def generate_fake(count=100):
         from sqlalchemy.exc import IntegrityError
         from random import seed, randint
+        from forgery_py import date
 
         users = User.query.all()
         # The method seed() sets the integer starting value used in generating
@@ -81,7 +82,8 @@ class Follow(db.Model):
             if int_follower != int_followed:
                 f = Follow(
                     follower=users[int_follower],
-                    followed=users[int_followed]
+                    followed=users[int_followed],
+                    timestamp=date.date(past=True)
                 )
                 db.session.add(f)
                 # relationship might not be random, in which case rollback
