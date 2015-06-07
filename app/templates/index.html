@@ -239,7 +239,7 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    <a class="btn btn-default btn-lg btn-block" href="{{ url_for('main.firms', username=current_user.username, firm_type_code = 'vc') }}" role="button">View All Venture Captial Firms</a>
+                    <a class="btn btn-default btn-lg btn-block" href="{{ url_for('main.firms', username=current_user.username, firm_type_code = 'vc') }}" role="button">View All Venture Captial Firms Owned by {{ current_user.username }}</a>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -308,7 +308,7 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    <a class="btn btn-default btn-lg btn-block" href="{{ url_for('main.firms', username=current_user.username, firm_type_code='ai') }}" role="button">View All Accelerator and Incubators</a>
+                    <a class="btn btn-default btn-lg btn-block" href="{{ url_for('main.firms', username=current_user.username, firm_type_code='ai') }}" role="button">View All Accelerator and Incubators Owned by {{ current_user.username }}</a>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -377,7 +377,7 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    <a class="btn btn-default btn-lg btn-block" href="{{ url_for('main.firms', username=current_user.username, firm_type_code='su') }}" role="button">View All Startup Organizations</a>
+                    <a class="btn btn-default btn-lg btn-block" href="{{ url_for('main.firms', username=current_user.username, firm_type_code='su') }}" role="button">View All Startup Organizations Owned by {{ current_user.username }}</a>
                 </div>
                 <!-- /.panel-body -->
             </div>

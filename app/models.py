@@ -473,7 +473,8 @@ class Firm(db.Model):
             u = User.query.offset(randint(0, user_count - 1)).first()
 
             # create fake firm
-            f = Firm(name=forgery_py.name.company_name(),
+            f = Firm(name=' '.join([forgery_py.name.company_name(),
+                                    forgery_py.name.company_name()]),
                      city=forgery_py.address.city(),
                      state=forgery_py.address.state_abbrev(),
                      country=forgery_py.address.country(),
@@ -528,7 +529,8 @@ class Company(db.Model):
             u = User.query.offset(randint(0, user_offset)).first()
 
             # create fake company
-            c = Company(name=forgery_py.name.company_name(),
+            c = Company(name=' '.join([forgery_py.name.company_name(),
+                                       forgery_py.name.company_name()]),
                         city=forgery_py.address.city(),
                         state=forgery_py.address.state_abbrev(),
                         country=forgery_py.address.country(),

@@ -53,13 +53,43 @@ def db_rebuild():
     from random import seed
     import forgery_py
     seed()
-    test_user = User(
-        email='test@insights.com',
-        username='testuser',
+    test_user_1 = User(
+        email='salim@insights.com',
+        username='salimham',
+        password='password',
+        confirmed=True,
+        name='Salim Hamed',
+        location='Seattle, WA',
+        about_me=forgery_py.lorem_ipsum.sentence(),
+        member_since=forgery_py.date.date(True)
+    )
+    test_user_2 = User(
+        email='bryan@insights.com',
+        username='bryan',
+        password='password',
+        confirmed=True,
+        name='Bryan Davis',
+        location='Seattle, WA',
+        about_me=forgery_py.lorem_ipsum.sentence(),
+        member_since=forgery_py.date.date(True)
+    )
+    test_user_3 = User(
+        email='joe@insights.com',
+        username='joe',
         password='password',
         confirmed=True,
         name='Joe Smith',
-        location='Seattle, WA',
+        location='San Francisco, CA',
+        about_me=forgery_py.lorem_ipsum.sentence(),
+        member_since=forgery_py.date.date(True)
+    )
+    test_user_4 = User(
+        email='bill@insights.com',
+        username='bill',
+        password='password',
+        confirmed=True,
+        name='Bill Gates',
+        location='Bellevue, WA',
         about_me=forgery_py.lorem_ipsum.sentence(),
         member_since=forgery_py.date.date(True)
     )
@@ -73,7 +103,8 @@ def db_rebuild():
         about_me=forgery_py.lorem_ipsum.sentence(),
         member_since=forgery_py.date.date(True)
     )
-    db.session.add_all([test_user, admin_user])
+    db.session.add_all([test_user_1, test_user_2, test_user_3, test_user_4,
+                        admin_user])
     db.session.commit()
 
     # insert fake user data
