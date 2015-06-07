@@ -26,10 +26,15 @@
                     {{ title }}
                 </div>
                 <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li{% if filter_user %} class="active"{% endif %}><a href="{{ url_for('main.firms', username = user.username, firm_type_code = type_code) }}">Owned By {{ user.username }}</a></li>
+                        <li{% if not filter_user %} class="active"{% endif %}><a href="{{ url_for('main.firms', username = user.username, firm_type_code = type_code, filter_user = 0) }}">All {{ title }}</a></li>
+                    </ul>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Tier</th>
@@ -42,6 +47,9 @@
                             <tbody>
                             {% for firm in firms %}
                             <tr>
+                                <td>
+                                    {{ loop.index }}
+                                </td>
                                 <td>
                                     <a href="{{ url_for('main.firm', id=firm.id) }}">
                                         {{ firm.name }}
@@ -73,9 +81,6 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    <div class="pagination">
-                        {{ macros.pagination_widget(pagination, endpoint, username=user.username) }}
-                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>

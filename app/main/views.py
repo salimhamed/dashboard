@@ -205,7 +205,7 @@ def firms(username):
 
     # get request arguments
     firm_type_code = request.args.get('firm_type_code', 'vc', type=str)
-    page = request.args.get('page', 1, type=int)
+    filter_user = request.args.get('filter_user', 1, type=int)
 
     # format firm type
     firm_type = FirmType.query.filter_by(firm_type_code=firm_type_code).first()
@@ -215,17 +215,17 @@ def firms(username):
     firm_type_code = firm_type.firm_type_code
     firm_type_p = p.plural(firm_type_full)
 
-    # pagenation query for firms
+    # query for firms
     query = Firm.query\
-                .join(FirmType, FirmType.id == Firm.firm_type_id)\
-                .join(FirmTier, FirmTier.id == Firm.firm_tier_id)\
-                .filter(Firm.user_id == user.id,
-                        FirmType.firm_type == firm_type_full)\
-                .order_by(FirmTier.firm_tier.asc(),
-                          Firm.name.asc())
-    pagination = query.paginate(
-        page, per_page=current_app.config['FOLLOWERS_PER_PAGE'],
-        error_out=False)
+        .join(FirmType, FirmType.id == Firm.firm_type_id)\
+        .join(FirmTier, FirmTier.id == Firm.firm_tier_id)\
+        .filter(FirmType.firm_type == firm_type_full)
+    if filter_user:
+        query = query.filter(Firm.user_id == user.id)
+    query = query.order_by(FirmTier.firm_tier.asc(), Firm.name.asc())
+
+    # build response dataset
+    firm_list = query.all()
     firms = [{'id': item.id,
               'name': item.name,
               'type': item.type.firm_type,
@@ -234,56 +234,10 @@ def firms(username):
               'city': item.city,
               'state': item.state,
               'country': item.country}
-             for item in pagination.items]
+             for item in firm_list]
     return render_template('firm_list.html', user=user,
                            title=firm_type_p, type_code=firm_type_code,
-                           endpoint='main.firms', pagination=pagination,
-                           firms=firms)
-
-
-@main.route('/firmlist')
-@login_required
-def firmlist():
-    user = User.query.first()
-    if user is None:
-        flash('Invalid user.', 'error')
-        return redirect(url_for('main.index'))
-
-    # get request arguments
-    firm_type_code = request.args.get('firm_type_code', 'vc', type=str)
-    page = request.args.get('page', 1, type=int)
-
-    # format firm type
-    firm_type = FirmType.query.filter_by(firm_type_code=firm_type_code).first()
-    from inflect import engine
-    p = engine()
-    firm_type_full = firm_type.firm_type
-    firm_type_code = firm_type.firm_type_code
-    firm_type_p = p.plural(firm_type_full)
-
-    # pagenation query for firms
-    query = Firm.query\
-                .join(FirmType, FirmType.id == Firm.firm_type_id)\
-                .join(FirmTier, FirmTier.id == Firm.firm_tier_id)\
-                .filter(Firm.user_id == user.id,
-                        FirmType.firm_type == firm_type_full)\
-                .order_by(FirmTier.firm_tier.asc(),
-                          Firm.name.asc())
-    pagination = query.paginate(
-        page, per_page=current_app.config['FOLLOWERS_PER_PAGE'],
-        error_out=False)
-    firms = [{'id': item.id,
-              'name': item.name,
-              'type': item.type.firm_type,
-              'tier': item.tier.firm_tier,
-              'owner': item.owner,
-              'city': item.city,
-              'state': item.state,
-              'country': item.country}
-             for item in pagination.items]
-    return render_template('firm_list.html', user=user,
-                           title=firm_type_p, type_code=firm_type_code,
-                           endpoint='main.firms', pagination=pagination,
+                           filter_user=filter_user, endpoint='main.firms',
                            firms=firms)
 
 

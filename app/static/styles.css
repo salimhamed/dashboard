@@ -138,7 +138,7 @@ span.twitter-typeahead {
     margin: 0;
 }
 
-/* panels */
+/* firm panels */
 .panel-data {
     font-size: 35px;
 }
@@ -195,4 +195,9 @@ span.twitter-typeahead {
 
 .morris-charts path {
     cursor: pointer;
+}
+
+/* table nav tabs */
+.nav-tabs {
+    margin-bottom: 10px;
 }
