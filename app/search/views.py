@@ -1,4 +1,4 @@
-from flask import Response, render_template, request
+from flask import Response, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from . import search
 from .forms import SearchForm
@@ -19,6 +19,13 @@ def search_app():
     companies = Company.query\
         .filter(Company.name.ilike('{}%'.format(query)))\
         .order_by(Company.name.asc()).all()
+
+    # if only one search result then return detail page
+    if len(firms) + len(companies) == 1:
+        if firms:
+            return redirect(url_for('main.firm', id=firms[0].Firm.id))
+        else:
+            return redirect(url_for('main.company', id=companies[0].id))
 
     # parse firms
     vc_firms = []
