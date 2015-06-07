@@ -268,24 +268,6 @@ def startups():
     return render_template('results.html', title="Startups", firms=results)
 
 
-@main.route('/ventures')
-@login_required
-def ventures():
-    results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query\
-        .join(FirmType).join(FirmTier)\
-        .filter(FirmType.firm_type == "Venture Capital Firm")] # Firm.query.all().filter(Firm.type == "")]
-    return render_template('results.html', title="Venture Capital", firms=results)
-
-
-@main.route('/incubators')
-@login_required
-def incubators():
-    results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query\
-        .join(FirmType).join(FirmTier)\
-        .filter(FirmType.firm_type == "Accelerator and Incubator")] # Firm.query.all().filter(Firm.type == "")]
-    return render_template('results.html', title="Accelerators and Incubators", firms=results)
-
-
 @main.route('/users')
 @login_required
 def users():

@@ -176,16 +176,16 @@
                     <a href="#"><i class="fa fa-cubes fa-fw"></i> Relationships<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/startups"><i class="fa fa-lightbulb-o fa-fw"></i> Startup Companies</a>
+                            <a href="#"><i class="fa fa-lightbulb-o fa-fw"></i> Startup Companies</a>
                         </li>
                         <li>
-                            <a href="/ventures"><i class="fa fa-university fa-fw"></i> Venture Capital Firms</a>
+                            <a href="{{ url_for('main.firms', username = current_user.username, firm_type_code = 'vc') }}"><i class="fa fa-university fa-fw"></i> Venture Capital Firms</a>
                         </li>
                         <li>
-                            <a href="/incubators"><i class="fa fa-rocket fa-fw"></i> Acclerators and Incubators</a>
+                            <a href="{{ url_for('main.firms', username = current_user.username, firm_type_code = 'ai') }}"><i class="fa fa-rocket fa-fw"></i> Acclerators and Incubators</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-building-o fa-fw"></i> Startup Organizations</a>
+                            <a href="{{ url_for('main.firms', username = current_user.username, firm_type_code = 'su') }}"><i class="fa fa-building-o fa-fw"></i> Startup Organizations</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

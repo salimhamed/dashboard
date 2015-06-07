@@ -7,7 +7,7 @@
 
     <!-- page header -->
     <div class="page-header">
-        <h1>{{ title }} <small>Owned By {{ user.username }}</small></h1>
+        <h1>{{ title }}{% if filter_user %} <small>Owned By {{ user.username }}</small>{% endif %}</h1>
     </div>
     <!-- end page header -->
 
