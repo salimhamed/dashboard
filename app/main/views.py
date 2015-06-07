@@ -26,8 +26,27 @@ def index():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = user.posts.order_by(Post.timestamp.desc()).all()
-    return render_template('user.html', user=user, posts=posts)
+
+    # query for firms
+    firms = Firm.query.join(FirmType).join(FirmTier).join(User)\
+        .with_entities(Firm, FirmType, FirmTier, User)\
+        .filter(User.username == username)\
+        .order_by(FirmTier.firm_tier.asc(), Firm.name.asc()).all()
+
+    # parse firms
+    vc_firms = []
+    ai_firms = []
+    su_firms = []
+    for firm in firms:
+        if firm.FirmType.firm_type_code == 'vc':
+            vc_firms.append(firm)
+        if firm.FirmType.firm_type_code == 'ai':
+            ai_firms.append(firm)
+        if firm.FirmType.firm_type_code == 'su':
+            su_firms.append(firm)
+
+    return render_template('user.html', user=user, vc_firms=vc_firms,
+                           ai_firms=ai_firms, su_firms=su_firms)
 
 
 @main.route('/users/<username>')
