@@ -31,6 +31,14 @@
     color: #777;
 }
 
+/* alerts dropdown */
+.badge-alerts {
+    background-color: #d43f3a;
+}
+.dropdown-alerts {
+    width: 500px !important;
+}
+
 /* blog posts */
 ul.posts {
     list-style-type: none;
