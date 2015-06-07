@@ -117,13 +117,13 @@ def db_rebuild():
     Follow.generate_fake(2000)
 
     # insert fake firms
-    Firm.generate_fake(2000)
+    Firm.generate_fake(5000)
 
     # insert fake companies
-    Company.generate_fake(5000)
+    Company.generate_fake(10000)
 
     # insert fake relationships
-    Relationship.generate_fake(30000)
+    Relationship.generate_fake(60000)
 
     # print results
     inspector = db.inspect(db.engine)
