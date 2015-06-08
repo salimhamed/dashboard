@@ -20,10 +20,12 @@ class EditProfileForm(Form):
         # and identifier of the item and the text to show in the control
         self.geo.choices = [(geo.id, geo.geo_name)
                              for geo in Geo.query.order_by(Geo.geo_name).all()]
+        self.geo.choices.insert(0, (-1, ''))
 
         self.user_type.choices = \
             [(utype.id, utype.name)
              for utype in UserType.query.order_by(UserType.name).all()]
+        self.user_type.choices.insert(0, (-1, ''))
 
 
 class EditProfileAdminForm(Form):
@@ -38,6 +40,8 @@ class EditProfileAdminForm(Form):
     name = StringField('Real name', validators=[Length(0, 64)])
     location = StringField('Location', validators=[Length(0, 64)])
     about_me = TextAreaField('About me')
+    geo = SelectField('Geo', coerce=int)  # 'coerce': store values as ints
+    user_type = SelectField('User Type', coerce=int)
     submit = SubmitField('Submit')
 
     def __init__(self, user, *args, **kwargs):
@@ -47,6 +51,16 @@ class EditProfileAdminForm(Form):
         # and identifier of the item and the text to show in the control
         self.role.choices = [(role.id, role.name)
                              for role in Role.query.order_by(Role.name).all()]
+
+        self.geo.choices = [(geo.id, geo.geo_name)
+                             for geo in Geo.query.order_by(Geo.geo_name).all()]
+        self.geo.choices.insert(0, (-1, ''))
+
+        self.user_type.choices = \
+            [(utype.id, utype.name)
+             for utype in UserType.query.order_by(UserType.name).all()]
+        self.user_type.choices.insert(0, (-1, ''))
+
         self.user = user
 
     def validate_email(self, field):

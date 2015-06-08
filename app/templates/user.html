@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as macros %}
 
-{% block title %}Insights - {{ user.username }}{% endblock %}
+{% block title %}Insights - {{ user.User.username }}{% endblock %}
 
 {% block wrapper %}
 
@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            {{ user.username }}
+            {{ user.User.username }}
         </h1>
     </div>
 </div>
@@ -17,26 +17,29 @@
 <!-- end penetration summary header -->
 <div class="row">
     <div class="col-lg-12">
-        <img class="img-rounded profile-thumbnail" src="{{ user.gravatar(size=256) }}">
+        <img class="img-rounded profile-thumbnail" src="{{ user.User.gravatar(size=256) }}">
         <div class="profile-header">
             <!-- only create <p> element with name and location are set -->
-            {% if user.name or user.location %}
+            {% if user.User.name or user.User.location %}
             <p>
-                {% if user.name %}{{ user.name }}{% endif %}
-                {% if user.location %}
-                    From <a href="http://maps.google.com/?q={{ user.location }}">{{ user.location }}</a>
-                {% endif %}
+                {% if user.User.name %}<strong>{{ user.User.name }}</strong>{% endif %}{% if user.User.location %} sits in <a target="_blank" href="http://maps.google.com/?q={{ user.User.location }}">{{ user.User.location }}</a>{% endif %}.
+            </p>
+            {% endif %}
+
+            {% if user.Geo.geo_name or user.UserType.name %}
+            <p>
+                Works as a {% if user.UserType.name %}<strong>{{ user.UserType.name }}</strong>{% endif %}{% if user.Geo.geo_name %} in <strong>{{ user.Geo.geo_name }}</strong>{% endif %}.
             </p>
             {% endif %}
 
             <!-- only show email when user is an admin -->
             {% if current_user.is_administrator() %}
-            <p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+            <p><a href="mailto:{{ user.User.email }}">{{ user.User.email }}</a></p>
             {% endif %}
 
-            {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+            {% if user.User.about_me %}<p>{{ user.User.about_me }}</p>{% endif %}
 
-            <p>Member since {{ moment(user.member_since).format('L') }}. Last seen {{ moment(user.last_seen).fromNow() }}.</p>
+            <p>Member since {{ moment(user.User.member_since).format('L') }}. Last seen {{ moment(user.User.last_seen).fromNow() }}.</p>
 
             {% if vc_firms %}
             <p>Owner of {{ vc_firms|length }} <a href="#bm_vc">Venture Capital Firms</a>.</p>
@@ -51,22 +54,22 @@
             {% endif %}
 
             <p>
-                {% if current_user.can(Permission.FOLLOW) and user != current_user %}
-                    {% if not current_user.is_following(user) %}
-                    <a href="{{ url_for('main.follow', username=user.username) }}" class="btn btn-primary">Follow</a>
+                {% if current_user.can(Permission.FOLLOW) and user.User != current_user %}
+                    {% if not current_user.is_following(user.User) %}
+                    <a href="{{ url_for('main.follow', username=user.User.username) }}" class="btn btn-primary">Follow</a>
                     {% else %}
-                    <a href="{{ url_for('main.unfollow', username=user.username) }}" class="btn btn-default">Unfollow</a>
+                    <a href="{{ url_for('main.unfollow', username=user.User.username) }}" class="btn btn-default">Unfollow</a>
                     {% endif %}
                 {% endif %}
-                <a href="{{ url_for('main.followers', username=user.username) }}">Followers:</a> <span class="badge">{{ user.followers.count() }}</span>
-                | <a href="{{ url_for('main.followed_by', username=user.username) }}">Following:</a> <span class="badge">{{ user.followed.count() }}</span>
-                {% if current_user.is_authenticated() and user != current_user and user.is_following(current_user) %}
+                <a href="{{ url_for('main.followers', username=user.User.username) }}">Followers:</a> <span class="badge">{{ user.User.followers.count() }}</span>
+                | <a href="{{ url_for('main.followed_by', username=user.User.username) }}">Following:</a> <span class="badge">{{ user.User.followed.count() }}</span>
+                {% if current_user.is_authenticated() and user.User != current_user and user.User.is_following(current_user) %}
                 | <span class="label label-default">Follows you</span>
                 {% endif %}
             </p>
 
             <!-- only show edit button if user if viewing their own profile -->
-            {% if user == current_user %}
+            {% if user.User == current_user %}
             <p>
                 <a class="btn btn-default" href="{{ url_for('main.edit_profile') }}">Edit Profile</a>
             </p>
@@ -75,7 +78,7 @@
             <!-- admins see edit buttons on all profiles -->
             {% if current_user.is_administrator() %}
             <p>
-                <a class="btn btn-danger" href="{{ url_for('main.edit_profile_admin', id=user.id) }}">Edit Profile [Admin]</a>
+                <a class="btn btn-danger" href="{{ url_for('main.edit_profile_admin', id=user.User.id) }}">Edit Profile [Admin]</a>
             </p>
             {% endif %}
         </div>

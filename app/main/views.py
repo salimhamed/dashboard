@@ -25,7 +25,9 @@ def index():
 @main.route('/user/<username>')
 @login_required
 def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
+    user = User.query.outerjoin(Geo).outerjoin(UserType)\
+        .with_entities(User, Geo, UserType)\
+        .filter(User.username==username).first_or_404()
 
     # query for firms
     firms = Firm.query.join(FirmType).join(FirmTier).join(User)\
@@ -79,16 +81,12 @@ def users(username):
 def edit_profile():
     form = EditProfileForm()
     if form.validate_on_submit():
-        # get geo and user_type
-        geo = Geo.query.get(form.geo.data)
-        user_type = UserType.query.get(form.user_type.data)
-
         # change values based on form input
         current_user.name = form.name.data
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
-        current_user.geo = geo
-        current_user.user_type = user_type
+        current_user.geo = Geo.query.get(form.geo.data)
+        current_user.user_type = UserType.query.get(form.user_type.data)
         db.session.add(current_user)
         flash('Your profile has been updated!', 'success')
         return redirect(url_for('main.user', username=current_user.username))
@@ -114,6 +112,8 @@ def edit_profile_admin(id):
         user.role = Role.query.get(form.role.data)
         user.name = form.name.data
         user.location = form.location.data
+        user.geo = Geo.query.get(form.geo.data)
+        user.user_type = UserType.query.get(form.user_type.data)
         user.about_me = form.about_me.data
         db.session.add(user)
         flash('The profile has been updated.', 'success')
@@ -124,6 +124,8 @@ def edit_profile_admin(id):
     form.role.data = user.role_id
     form.name.data = user.name
     form.location.data = user.location
+    form.geo.data = user.geo_id
+    form.user_type.data = user.user_type_id
     form.about_me.data = user.about_me
     return render_template('edit_profile.html', form=form, user=user)
 
