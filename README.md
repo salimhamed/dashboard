@@ -1,6 +1,6 @@
 # Overview
 
-This is a simple dashboarding web application built using Flask, Bootstrap, and D3.  The application has been tested with Python 2.7.
+This is a simple dashboarding web application built using Flask and Bootstrap.  The application has been tested with Python 2.7.
 
 # Installation
 
@@ -83,7 +83,13 @@ This is a simple dashboarding web application built using Flask, Bootstrap, and 
 
 * [Flask Documentation](http://flask.pocoo.org/)
 * [Bootstrap Documentation](http://getbootstrap.com/)
-* [SB Admin Bootstrap Template](http://startbootstrap.com/template-overviews/sb-admin/)
-* [D3 Documentation](http://d3js.org/)
+* [SB Admin 2 Bootstrap Template](http://startbootstrap.com/template-overviews/sb-admin-2/)
 * [Miguel Grinberg Flask Web Development Book](http://www.flaskbook.com/)
 * [Miguel Grinberg Flask Web Development GitHub](https://github.com/miguelgrinberg/flasky)
+
+# Flask Extensions
+* [Flask Bootstrap](http://pythonhosted.org/Flask-Bootstrap/)
+* [Flask Mail](https://pythonhosted.org/Flask-Mail/)
+* [Flask Moment](https://github.com/miguelgrinberg/flask-moment/)
+* [Flask SQLAlchemy](https://pythonhosted.org/Flask-SQLAlchemy/)
+* [Flask Login](https://flask-login.readthedocs.org/en/latest/)
