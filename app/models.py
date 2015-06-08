@@ -57,6 +57,55 @@ class Role(db.Model):
         return '<Role %r>' % self.name
 
 
+class Geo(db.Model):
+    __tablename__ = 'geos'
+    id = db.Column(db.Integer, primary_key=True)
+    geo_name = db.Column(db.String(20), unique=True)
+    users = db.relationship('User', backref='geo', lazy='dynamic')
+
+    @staticmethod
+    def insert_geos():
+        """Update or create all Geos"""
+        geos = ['AMER',
+                'APAC',
+                'EMEA',
+                'CHNA',
+                'JP']
+        for name in geos:
+            geo = Geo.query.filter_by(geo_name=name).first()
+            if geo is None:
+                geo = Geo(geo_name=name)
+            db.session.add(geo)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<Geo %r>' % self.geo_name
+
+
+class UserType(db.Model):
+    __tablename__ = 'user_types'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), unique=True)
+    users = db.relationship('User', backref='user_type', lazy='dynamic')
+
+    @staticmethod
+    def insert_user_types():
+        """Update or create all Geos"""
+        types = ['VC BDM',
+                 'AI BDM',
+                 'VC/AI BDM',
+                 'SCR']
+        for type in types:
+            user_type = UserType.query.filter_by(name=type).first()
+            if user_type is None:
+                user_type = UserType(name=type)
+            db.session.add(user_type)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<UserType %r>' % self.name
+
+
 class Follow(db.Model):
     __tablename__ = 'follows'
     follower_id = db.Column(db.Integer, db.ForeignKey('users.id'),
@@ -110,6 +159,8 @@ class User(UserMixin, db.Model):
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
     avatar_hash = db.Column(db.String(32))
+    geo_id = db.Column(db.Integer, db.ForeignKey('geos.id'))
+    user_type_id = db.Column(db.Integer, db.ForeignKey('user_types.id'))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     followed = db.relationship('Follow',
                                foreign_keys=[Follow.follower_id],

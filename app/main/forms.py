@@ -2,14 +2,28 @@ from flask_wtf import Form
 from wtforms import StringField, TextAreaField, BooleanField, SelectField, \
     SubmitField, ValidationError
 from wtforms.validators import Required, Length, Email, Regexp
-from ..models import Role, User
+from ..models import Role, User, Geo, UserType
 
 
 class EditProfileForm(Form):
     name = StringField('Real name', validators=[Length(0, 64)])
     location = StringField('Location', validators=[Length(0, 64)])
     about_me = TextAreaField('About me')
+    geo = SelectField('Geo', coerce=int)  # 'coerce': store values as ints
+    user_type = SelectField('User Type', coerce=int)
     submit = SubmitField('Submit')
+
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        # set the choices for the role dropdown list
+        # give as a list of tuples, with each tuple consisting of two values:
+        # and identifier of the item and the text to show in the control
+        self.geo.choices = [(geo.id, geo.geo_name)
+                             for geo in Geo.query.order_by(Geo.geo_name).all()]
+
+        self.user_type.choices = \
+            [(utype.id, utype.name)
+             for utype in UserType.query.order_by(UserType.name).all()]
 
 
 class EditProfileAdminForm(Form):

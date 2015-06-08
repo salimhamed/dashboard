@@ -5,7 +5,7 @@ from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm
 from .. import db
 from ..models import Permission, Role, User, Post, Firm, Company, FirmTier, \
-    FirmType, Follow
+    FirmType, Follow, Geo, UserType
 from ..decorators import admin_required, permission_required
 
 
@@ -79,10 +79,16 @@ def users(username):
 def edit_profile():
     form = EditProfileForm()
     if form.validate_on_submit():
+        # get geo and user_type
+        geo = Geo.query.get(form.geo.data)
+        user_type = UserType.query.get(form.user_type.data)
+
         # change values based on form input
         current_user.name = form.name.data
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
+        current_user.geo = geo
+        current_user.user_type = user_type
         db.session.add(current_user)
         flash('Your profile has been updated!', 'success')
         return redirect(url_for('main.user', username=current_user.username))
@@ -90,6 +96,8 @@ def edit_profile():
     form.name.data = current_user.name
     form.location.data = current_user.location
     form.about_me.data = current_user.about_me
+    form.geo.data = current_user.geo_id
+    form.user_type.data = current_user.user_type_id
     return render_template('edit_profile.html', form=form)
 
 
