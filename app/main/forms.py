@@ -94,7 +94,6 @@ class AddCompanyForm(Form):
             country=form.country.data,
             # user_id=form.user_id.data,
             firms=form.firms.data,
-
     name = StringField('Company Name', validators=[Required(), Length(1, 64),])
     city = StringField('City', validators=[
         Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
