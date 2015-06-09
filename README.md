@@ -92,4 +92,6 @@ This is a simple dashboarding web application built using Flask and Bootstrap.  
 * [Flask Mail](https://pythonhosted.org/Flask-Mail/)
 * [Flask Moment](https://github.com/miguelgrinberg/flask-moment/)
 * [Flask SQLAlchemy](https://pythonhosted.org/Flask-SQLAlchemy/)
+* [Flask Migrate](https://flask-migrate.readthedocs.org/en/latest/)
 * [Flask Login](https://flask-login.readthedocs.org/en/latest/)
+* [Flask Script](http://flask-script.readthedocs.org/en/latest/)
