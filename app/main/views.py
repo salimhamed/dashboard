@@ -324,6 +324,26 @@ def firms(username):
                            filter_user=filter_user, endpoint='main.firms',
                            firms=firms)
 
+@main.route('/create', methods=['GET', 'POST'])
+def create():
+    form = AddCompanyForm()
+    if form.validate_on_submit():
+        company = Company(
+            name=form.name.data,
+            city=form.city.data,
+            state=form.state.data,
+            country=form.country.data,
+            # user_id=form.user_id.data,
+            # firms=form.firms.data,
+        )
+        db.session.add(company)
+        db.session.commit()  # must force commit to generate user id
+        flash('A record for company "'+form.name.data+'" has been created', 'info')
+        return redirect(url_for('main.index'))
+    return render_template('create.html', form=form)
+
+
+
 # @main.route('/startups')
 # @login_required
 # def startups():
