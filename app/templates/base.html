@@ -230,6 +230,9 @@
     <div class="container-fluid">
 
         {% block content_flash %}
+            <div class="">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </div>
             {% for message in get_flashed_messages(category_filter=["info"]) %}
             <div class="alert alert-info alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
