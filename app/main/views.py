@@ -323,3 +323,41 @@ def firms(username):
                            title=firm_type_p, type_code=firm_type_code,
                            filter_user=filter_user, endpoint='main.firms',
                            firms=firms)
+
+# @main.route('/startups')
+# @login_required
+# def startups():
+#     results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query\
+#         .join(FirmType).join(FirmTier)\
+#         .filter(FirmType.firm_type == "Startup Organization")] # Firm.query.all().filter(Firm.type == "")]
+#     return render_template('results.html', title="Startups", firms=results)
+
+
+
+
+# @main.route('/ventures')
+# @login_required
+# def ventures():
+#     results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query\
+#         .join(FirmType).join(FirmTier)\
+#         .filter(FirmType.firm_type == "Venture Capital Firm")] # Firm.query.all().filter(Firm.type == "")]
+#     return render_template('results.html', title="Venture Capital", firms=results)
+
+
+
+# @main.route('/incubators')
+# @login_required
+# def incubators():
+#     results = [{'id': n.id, 'name': n.name, 'type': n.type, 'tier': n.tier, 'city': n.city, 'state': n.state, 'country': n.country} for n in Firm.query\
+#         .join(FirmType).join(FirmTier)\
+#         .filter(FirmType.firm_type == "Accelerator and Incubator")] # Firm.query.all().filter(Firm.type == "")]
+#     return render_template('results.html', title="Accelerators and Incubators", firms=results)
+
+
+# @main.route('/users')
+# @login_required
+# def users():
+#     results = [{'id': n.id, 'name': n.name, 'username': n.username, 'email': n.email, 'location': n.location} for n in User.query.all()] 
+#     # print(results)
+#     return render_template('userlist.html', title="Insight Users", users=results)
+
