@@ -88,24 +88,21 @@ class PostForm(Form):
 
 
 class AddCompanyForm(Form):
-            name=form.name.data,
-            city=form.city.data,
-            state=form.state.data,
-            country=form.country.data,
-            # user_id=form.user_id.data,
-            firms=form.firms.data,
-    name = StringField('Company Name', validators=[Required(), Length(1, 64),])
+    name = StringField('Company Name', validators=[
+        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
+                                          'Company names must have only letters, '
+                                          'numbers, dots or underscores')])
     city = StringField('City', validators=[
         Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
                                           'City names must have only letters, '
                                           'numbers, dots or underscores')])
     state = StringField('State', validators=[
         Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
-                                          'City names must have only letters, '
+                                          'State names must have only letters, '
                                           'numbers, dots or underscores')])
     country = StringField('Country', validators=[
         Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
-                                          'City names must have only letters, '
+                                          'Country names must have only letters, '
                                           'numbers, dots or underscores')])
 
     # user_id = StringField('City', validators=[
