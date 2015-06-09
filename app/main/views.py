@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, request, abort, \
     current_app, jsonify
 from flask_login import current_user, login_required
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, PostForm
+from .forms import EditProfileForm, EditProfileAdminForm, PostForm, AddCompanyForm
 from .. import db
 from ..models import Permission, Role, User, Post, Firm, Company, FirmTier, \
     FirmType, Follow, Geo, UserType
