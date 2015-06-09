@@ -89,19 +89,19 @@ class PostForm(Form):
 
 class AddCompanyForm(Form):
     name = StringField('Company Name', validators=[
-        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
+        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z. ]*$', 0,
                                           'Company names must have only letters, '
                                           'numbers, dots or underscores')])
     city = StringField('City', validators=[
-        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
+        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z. ]*$', 0,
                                           'City names must have only letters, '
                                           'numbers, dots or underscores')])
     state = StringField('State', validators=[
-        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
+        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z. ]*$', 0,
                                           'State names must have only letters, '
                                           'numbers, dots or underscores')])
     country = StringField('Country', validators=[
-        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
+        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z. ]*$', 0,
                                           'Country names must have only letters, '
                                           'numbers, dots or underscores')])
 
@@ -114,26 +114,4 @@ class AddCompanyForm(Form):
     #     Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
     #                                       'City names must have only letters, '
     #                                       'numbers, dots or underscores')])
-    submit = SubmitField('Submit')
-
-    def validate_email(self, field):
-        """
-        Custom form validator to check if email is already registered.
-
-        Any WTF Form class that has a method starting with 'validate' and
-        followed by the name of the field, will act as an additional field
-        validator.
-        """
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError('Email already registered.')
-
-    def validate_username(self, field):
-        """
-        Custom form validator to check if username is already registered.
-
-        Any WTF Form class that has a method starting with 'validate' and
-        followed by the name of the field, will act as an additional field
-        validator.
-        """
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError('Username already in use.')
+    submit = SubmitField('Add')
