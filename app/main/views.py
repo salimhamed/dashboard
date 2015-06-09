@@ -333,8 +333,8 @@ def create():
             city=form.city.data,
             state=form.state.data,
             country=form.country.data,
-            user_id=[None],
-            firms=[None],
+            user_id=form.user_id.data,
+            firms=form.firms.data,
         )
         db.session.add(company)
         db.session.commit()  # must force commit to generate user id

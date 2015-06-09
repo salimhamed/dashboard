@@ -104,6 +104,8 @@ class AddCompanyForm(Form):
         Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z. ]*$', 0,
                                           'Country names must have only letters, '
                                           'numbers, dots or underscores')])
+    user_id = SelectField('User Id', coerce=int)
+    firms = SelectField('Firms', coerce=int)
 
     # user_id = StringField('City', validators=[
     #     Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
