@@ -62,11 +62,16 @@
 
     {% block top_menu_items %}
     <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="/create">
+                <i class="fa fa-plus fa-fw"></i>
+            </a>
+        </li>
 
         {% block top_menu_items_alert %}
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-plus fa-fw"></i>
+                <i class="fa fa-bell fa-fw"></i>
                 <span class="badge badge-alerts">42</span>
                 <i class="fa fa-caret-down"></i>
             </a>
@@ -230,9 +235,6 @@
     <div class="container-fluid">
 
         {% block content_flash %}
-<!--             <div class="">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </div> -->
             {% for message in get_flashed_messages(category_filter=["info"]) %}
             <div class="alert alert-info alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
