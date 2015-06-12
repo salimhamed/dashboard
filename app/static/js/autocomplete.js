@@ -29,11 +29,6 @@ $(document).ready(function() {
         source: suggestion_class
     });
 
-
-
-    $(".fa.fa-plus").click(function(e){ window.location = "/create" })
-
-
 });
 
 // var bestPictures = new Bloodhound({

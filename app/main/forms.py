@@ -85,35 +85,3 @@ class EditProfileAdminForm(Form):
 class PostForm(Form):
     body = TextAreaField("What's on your mind?", validators=[Required()])
     submit = SubmitField('Submit')
-
-
-class AddCompanyForm(Form):
-    name = StringField('Company Name', validators=[
-        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z. ]*$', 0,
-                                          'Company names must have only letters, '
-                                          'numbers, dots or underscores')])
-    city = StringField('City', validators=[
-        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z. ]*$', 0,
-                                          'City names must have only letters, '
-                                          'numbers, dots or underscores')])
-    state = StringField('State', validators=[
-        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z. ]*$', 0,
-                                          'State names must have only letters, '
-                                          'numbers, dots or underscores')])
-    country = StringField('Country', validators=[
-        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z. ]*$', 0,
-                                          'Country names must have only letters, '
-                                          'numbers, dots or underscores')])
-    # user_id = SelectField('User Id', coerce=int)
-    # firms = SelectField('Firms', coerce=int)
-
-    # user_id = StringField('City', validators=[
-    #     Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
-    #                                       'City names must have only letters, '
-    #                                       'numbers, dots or underscores')])
-
-    # city = StringField('City', validators=[
-    #     Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z.]*$', 0,
-    #                                       'City names must have only letters, '
-    #                                       'numbers, dots or underscores')])
-    submit = SubmitField('Add')

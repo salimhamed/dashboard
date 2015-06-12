@@ -10,8 +10,8 @@ class Config(object):
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    MAIL_SUBJECT_PREFIX = '[Dashboard]'
-    MAIL_SENDER = 'Dashboard Admin <dashboard@example.com>'
+    MAIL_SUBJECT_PREFIX = '[Insights]'
+    MAIL_SENDER = 'Insights Admin <admin@insights.com>'
     DASHBOARD_ADMIN = os.environ.get('DASHBOARD_ADMIN', 'admin@insights.com')
     POSTS_PER_PAGE = 5
     FOLLOWERS_PER_PAGE = 10
@@ -22,19 +22,12 @@ class Config(object):
 
 
 class DevelopmentConfigPsql(Config):
-    """
-    Steps to create a development psql database:
-
-    1) create cluster with 'initdb pgdb'
-    2) start psql server with 'postgres -D pgdb'
-    """
     DEBUG = True
-    # SQLALCHEMY_DATABASE_URI = \
-    #     os.environ.get(
-    #         'DEV_DATABASE_URL',
-    #         'postgresql://localhost:5432/db_dev'
-    #     )
-    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://"+os.environ.get("PG_ADMIN")+":"+os.environ.get("PG_PASSWORD")+"@localhost/dashboard"
+    SQLALCHEMY_DATABASE_URI = \
+        os.environ.get(
+            'DEV_DATABASE_URL',
+            'postgresql://localhost:5432/db_dev'
+        )
 
 
 class DevelopmentConfigSqlite(Config):
@@ -57,10 +50,8 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = \
-        os.environ.get(
-            'DATABASE_URL'
-            'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-        )
+        "postgresql+psycopg2://" + os.environ.get("PG_ADMIN", 'admin') + ":" \
+        + os.environ.get("PG_PASSWORD", 'password') + "@localhost/dashboard"
 
 
 config = {
