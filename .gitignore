@@ -17,3 +17,6 @@ venv/
 
 # pgql database
 pgdb/
+
+# information and resources
+README_CONF.md
