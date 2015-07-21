@@ -23,13 +23,14 @@ cement==2.4.0
 docker-py==1.1.0
 dockerpty==0.3.2
 docopt==0.6.2
+inflect==0.2.5
 itsdangerous==0.24
 jmespath==0.7.1
 pathspec==0.3.3
+psycopg2==2.6
 python-dateutil==2.4.2
 requests==2.6.2
 six==1.9.0
 texttable==0.8.3
 websocket-client==0.30.0
 wsgiref==0.1.2
-psycopg2
