@@ -20,3 +20,6 @@ pgdb/
 
 # information and resources
 README_CONF.md
+
+# log files
+logs/**
