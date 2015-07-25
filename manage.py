@@ -137,5 +137,25 @@ def db_rebuild():
         print table
 
 
+@manager.command
+def deploy():
+    """Run deployment tasks."""
+    from flask.ext.migrate import upgrade
+
+    # migrate database to latest revision
+    upgrade()
+
+    # create user roles
+    Role.insert_roles()
+
+    # insert geos and usertypes as defined in model
+    Geo.insert_geos()
+    UserType.insert_user_types()
+
+    # insert firm types/tiers as defined in model
+    FirmType.insert_firm_types()
+    FirmTier.insert_firm_tiers()
+
+
 if __name__ == '__main__':
     manager.run()
