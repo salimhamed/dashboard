@@ -6,17 +6,18 @@ from app.models import User, Role, Post, Follow, FirmType, FirmTier, Firm, \
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
-app = create_app(os.getenv('FLASK_CONFIG', 'default'))
-manager = Manager(app)
-migrate = Migrate(app, db)
+application = create_app(os.getenv('FLASK_CONFIG', 'default'))
+manager = Manager(application)
+migrate = Migrate(application, db)
 
 
 def make_shell_context():
     """
-    Automatically import app, db, and model objects into interactive shell.
+    Automatically import application, db, and model objects into interactive
+    shell.
     """
-    return dict(app=app, db=db, User=User, Geo=Geo, Role=Role, Follow=Follow,
-                FirmType=FirmType, FirmTier=FirmTier, Firm=Firm,
+    return dict(application=application, db=db, User=User, Geo=Geo, Role=Role,
+                Follow=Follow, FirmType=FirmType, FirmTier=FirmTier, Firm=Firm,
                 Company=Company, Relationship=Relationship, UserType=UserType)
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
