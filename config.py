@@ -4,6 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY', 'hard to guess string')
+    SSL_DISABLE = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True  # enable auto commit after request
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
@@ -49,9 +50,21 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = \
-        "postgresql+psycopg2://" + os.environ.get("PG_ADMIN", 'admin') + ":" \
-        + os.environ.get("PG_PASSWORD", 'password') + "@localhost/dashboard"
+    SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
+    DEBUG = False
+
+    if 'RDS_DB_NAME' in os.environ:
+        SQLALCHEMY_DATABASE_URI = \
+            '{dialect}+{driver}://{user}:{password}@{host}:{port}/{dbname}'\
+            .format(
+                dialect='postgresql',
+                driver='psycopg2',
+                user=os.environ['RDS_USERNAME'],
+                password=os.environ['RDS_PASSWORD'],
+                host=os.environ['RDS_HOSTNAME'],
+                port=os.environ['RDS_PORT'],
+                dbname=os.environ['RDS_DB_NAME']
+            )
 
     @classmethod
     def init_app(cls, app):
@@ -75,6 +88,24 @@ class ProductionConfig(Config):
             secure=secure)
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
+
+
+class HerokuConfig(ProductionConfig):
+
+    @classmethod
+    def init_app(cls, app):
+        ProductionConfig.init_app(app)
+
+        # handle proxy server headers
+        from werkzeug.contrib.fixers import ProxyFix
+        app.wsgi_app = ProxyFix(app.wsgi_app)
+
+        # log to stderr
+        import logging
+        from logging import StreamHandler
+        file_handler = StreamHandler()
+        file_handler.setLevel(logging.WARNING)
+        app.logger.addHandler(file_handler)
 
 
 config = {
