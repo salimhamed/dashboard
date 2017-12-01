@@ -3,10 +3,6 @@
 This is a simple dashboarding application built using Flask and Bootstrap.  The application has been tested with Python 2.7. It's ready to deploy with [AWS Elastic Beanstalk](http://aws.amazon.com/elasticbeanstalk/).
 
 You can view the applcation at [flaskdashboard.info](http://flaskdashboard.info/) using the following user credentials:
-* **Test User #1**
-  * Email: joe@insights.com
-  * Password: password
-* **Test User #2**
   * Email: bill@insights.com
   * Password: password
 
