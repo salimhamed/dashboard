@@ -31,7 +31,7 @@ jmespath==0.7.1
 pathspec==0.3.3
 psycopg2==2.6
 python-dateutil==2.4.2
-requests==2.6.2
+requests==2.20.0
 six==1.9.0
 texttable==0.8.3
 websocket-client==0.30.0
