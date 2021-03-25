@@ -12,7 +12,7 @@ ForgeryPy==0.1
 Jinja2==2.7.3
 Mako==1.0.1
 MarkupSafe==0.23
-PyYAML==3.11
+PyYAML==5.4
 SQLAlchemy==1.0.0
 WTForms==2.0.2
 Werkzeug==0.10.4
