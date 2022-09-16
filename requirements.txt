@@ -10,7 +10,7 @@ Flask-Script==2.0.5
 Flask-WTF==0.11
 ForgeryPy==0.1
 Jinja2==2.7.3
-Mako==1.0.1
+Mako==1.2.2
 MarkupSafe==0.23
 PyYAML==3.11
 SQLAlchemy==1.0.0
